@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "target": "es2021",
+    "types": ["node"],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "lib": ["dom", "es2020"],
+    "jsx": "react",
+    "outDir": "dist",
+
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "sourceMap": true,
+    "declaration": true,
+    "skipLibCheck": true
+  },
+  "include": [
+    "src/**/*.ts",
+    "test/**/*.ts",
+    "gulpfile.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

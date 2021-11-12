@@ -1,0 +1,75 @@
+{
+  "name": "@adityahegde/typescript-test-utils",
+  "version": "1.0.0",
+  "description": "Various testing utils for writing tests in TypeScript/JavaScript",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "rm -rf dist/ && tsc -p tsconfig-build.json",
+    "test": "npm run test-mocha && jest",
+    "test-mocha": "nyc mocha test/**/*.spec.ts",
+    "docs": "typedoc --out docs src/index.ts src/*/index.ts"
+  },
+  "author": "adityahegderocks@gmail.com",
+  "license": "ISC",
+  "files": [
+    "dist",
+    "package.json",
+    "package-lock.json",
+    "README.md"
+  ],
+  "keywords": [
+    "typescript",
+    "decorators",
+    "framework",
+    "mocha",
+    "jest"
+  ],
+  "mocha": {
+    "ui": "bdd",
+    "require": [
+      "ts-node/register"
+    ]
+  },
+  "jest": {
+    "testMatch": [
+      "<rootDir>/test/**/*.jest.ts",
+      "<rootDir>/test/**/*.test.tsx"
+    ],
+    "preset": "ts-jest"
+  },
+  "nyc": {
+    "check-coverage": true,
+    "all": true,
+    "extension": [
+      ".ts"
+    ],
+    "include": [
+      "src/**/*"
+    ],
+    "reporter": [
+      "html",
+      "lcov",
+      "text-summary"
+    ],
+    "lines": 80,
+    "statements": 80
+  },
+  "devDependencies": {
+    "@types/jest": "^27.0.2",
+    "@types/mocha": "^9.0.0",
+    "@types/node": "^14.17.33",
+    "@typescript-eslint/eslint-plugin": "^5.3.1",
+    "@typescript-eslint/parser": "^5.3.1",
+    "eslint": "^8.2.0",
+    "jest": "^27.3.1",
+    "mocha": "^9.1.3",
+    "nyc": "^15.1.0",
+    "should": "^13.2.3",
+    "sinon": "^12.0.1",
+    "ts-jest": "^27.0.7",
+    "ts-node": "^10.4.0",
+    "typedoc": "^0.22.8",
+    "typedoc-plugin-markdown": "^3.11.3",
+    "typescript": "^4.4.4"
+  }
+}
