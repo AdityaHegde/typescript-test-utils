@@ -1,7 +1,7 @@
 import {MochaTestCommonBase} from "./MochaTestCommonBase";
 import should from "should";
 
-@MochaTestCommonBase.StaticSuite
+@MochaTestCommonBase.ParameterizedSuite([0, 1, 2].map(idx => [`ParameterizedTest${idx}`, `ParameterizedTest${idx}`]))
 export class ParameterizedTestSpec extends MochaTestCommonBase {
   private readonly expectedTitle: string;
 
@@ -38,5 +38,3 @@ export class ParameterizedTestSpec extends MochaTestCommonBase {
     this.teardownTestCalled = true;
   }
 }
-
-[0, 1, 2].forEach(idx => new ParameterizedTestSpec(`ParameterizedTest${idx}`, `ParameterizedTest${idx}`).test());

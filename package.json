@@ -1,6 +1,6 @@
 {
   "name": "@adityahegde/typescript-test-utils",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Various testing utils for writing tests in TypeScript/JavaScript",
   "main": "dist/index.js",
   "scripts": {

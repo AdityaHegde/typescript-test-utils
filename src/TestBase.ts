@@ -47,19 +47,25 @@ export abstract class TestBase {
    * Automatically adds the tests for the class. Useful when the test class is standalone.
    */
   public static Suite(constructor: any) {
-    constructor.StaticSuite(constructor);
-
-    const instance = new constructor(getClassName(constructor));
-    instance._test();
-  }
-
-  /**
-   * Have to be explicitly instantiated and tests have to be started.
-   * Useful when the test class is parameterised and multiple instances can exist.
-   */
-  public static StaticSuite(constructor: any) {
     if (!constructor._testHookData) {
       constructor._testHookData = new TestHookData();
+    }
+
+    const instance = new constructor(getClassName(constructor));
+    (instance as TestBase)._test();
+  }
+
+  public static ParameterizedSuite(params: Array<any>) {
+    return (constructor: any) => {
+      const testBase = constructor as typeof TestBase;
+      if (!testBase._testHookData) {
+        testBase._testHookData = new TestHookData();
+      }
+
+      params.forEach(args => {
+        const instance = new constructor(...args);
+        instance._test();
+      });
     }
   }
 
