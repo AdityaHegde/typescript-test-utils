@@ -1,6 +1,6 @@
 {
   "name": "@adityahegde/typescript-test-utils",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Various testing utils for writing tests in TypeScript/JavaScript",
   "main": "dist/index.js",
   "scripts": {
@@ -55,6 +55,7 @@
     "statements": 80
   },
   "devDependencies": {
+    "@adityahegde/misc-scripts": "^1.0.1",
     "@types/jest": "^27.0.2",
     "@types/mocha": "^9.0.0",
     "@types/node": "^14.17.33",

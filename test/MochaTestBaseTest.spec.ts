@@ -1,5 +1,6 @@
 import should from "should";
 import {MochaTestCommonBase} from "./MochaTestCommonBase";
+import {DataProviderData} from "../dist";
 
 @MochaTestCommonBase.Suite
 export class MochaTestBaseSpec extends MochaTestCommonBase {
@@ -19,7 +20,7 @@ export class MochaTestBaseSpec extends MochaTestCommonBase {
     this.setupTestCalled = true;
   }
 
-  public dataProvider() {
+  public dataProvider(): DataProviderData<[string, string]> {
     return {
       subData: [{
         title: "level0",
@@ -42,7 +43,7 @@ export class MochaTestBaseSpec extends MochaTestCommonBase {
   }
 
   @MochaTestCommonBase.Test("dataProvider")
-  public testDataProvider(arg0, arg1) {
+  public testDataProvider(arg0: string, arg1: string) {
     should(arg0).not.be.undefined();
     should(arg1).not.be.undefined();
     this.dataProviderArgs.push([arg0, arg1]);

@@ -1,5 +1,6 @@
 import {JestTestBase} from "../src/jest";
 import should from "should";
+import {DataProviderData} from "../dist";
 
 @JestTestBase.Suite
 export class JestTestBaseTest extends JestTestBase {
@@ -18,7 +19,7 @@ export class JestTestBaseTest extends JestTestBase {
     this.setupTestCalled = true;
   }
 
-  public dataProvider() {
+  public dataProvider(): DataProviderData<[string, string]> {
     return {
       subData: [{
         title: "level0",
@@ -41,7 +42,7 @@ export class JestTestBaseTest extends JestTestBase {
   }
 
   @JestTestBase.Test("dataProvider")
-  public testDataProvider(arg0, arg1) {
+  public testDataProvider(arg0: string, arg1: string) {
     should(arg0).not.be.undefined();
     should(arg1).not.be.undefined();
     this.dataProviderArgs.push([arg0, arg1]);
