@@ -1,27 +1,29 @@
-import {MochaTestBase} from "../src/mocha";
+import {TestBase} from "../../src";
+import {MochaTestLibrary} from "../../src/mocha/MochaTestLibrary";
 
-export class MochaTestCommonBase extends MochaTestBase {
+@TestBase.TestLibrary(MochaTestLibrary)
+export class MochaTestCommonBase extends TestBase {
   protected baseSetupCalled = false;
   protected baseSetupTestCalled = false;
   protected baseTeardownTestCalled = false;
   protected baseTeardownCalled = false;
 
-  @MochaTestBase.BeforeSuite()
+  @TestBase.BeforeSuite()
   public setupMochaTestCommonBase() {
     this.baseSetupCalled = true;
   }
 
-  @MochaTestBase.BeforeEachTest()
+  @TestBase.BeforeEachTest()
   public setupTestMochaTestCommonBase() {
     this.baseSetupTestCalled = true;
   }
 
-  @MochaTestBase.AfterEachTest()
+  @TestBase.AfterEachTest()
   public teardownTestMochaTestCommonBase() {
     this.baseTeardownTestCalled = true;
   }
 
-  @MochaTestBase.AfterSuite()
+  @TestBase.AfterSuite()
   public teardownMochaTestCommonBase() {
     this.baseTeardownCalled = true;
   }

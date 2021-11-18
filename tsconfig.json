@@ -4,8 +4,7 @@
     "types": ["node"],
     "module": "commonjs",
     "moduleResolution": "node",
-    "lib": ["dom", "es2020"],
-    "jsx": "react",
+    "lib": ["es2020"],
     "outDir": "dist",
 
     "experimentalDecorators": true,

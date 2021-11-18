@@ -3,7 +3,7 @@
 # typescript-test-utils
 
 Has decorator based utils for writing tests in TypeScript.
-<br>Supports mocha and jest tests.
+<br>Supports mocha and jest tests. Playwright support pending on https://github.com/microsoft/playwright/issues/7121
 
 ## Usage
 Install using `npm i @adityahegde/typescript-test-utils --save-dev`
@@ -14,17 +14,20 @@ Install mocha related packages `npm i mocha @types/mocha --save-dev`
 
 ```typescript
 import should from "should";
-import {MochaTestBase} from "@adityahegde/typescript-test-utils/dist/mocha";
-import {DataProviderData} from "@adityahegde/typescript-test-utils";
+import {MochaTestLibrary} from "@adityahegde/typescript-test-utils/dist/mocha/MochaTestLibrary";
+import {DataProviderData, TestBase} from "@adityahegde/typescript-test-utils";
 
-@MochaTestBase.Suite
-export class SampleMochaTest extends MochaTestBase {
-  @MochaTestBase.BeforeSuite()
+// TestBase.TestLibrary dictates what underlying library to use. MochaTestLibrary for mocha
+@TestBase.Suite
+// TestLibrary declaration should come after TestBase.Suite
+@TestBase.TestLibrary(MochaTestLibrary)
+export class SampleMochaTest extends TestBase {
+  @TestBase.BeforeSuite()
   public setupSuite() {
     // code to setup suite
   }
 
-  @MochaTestBase.BeforeEachTest()
+  @TestBase.BeforeEachTest()
   public setupTest() {
     // code to setup test
   }
@@ -53,17 +56,17 @@ export class SampleMochaTest extends MochaTestBase {
     };
   }
 
-  @MochaTestBase.Test("dataProvider")
+  @TestBase.Test("dataProvider")
   public someTestUsingDataProvidor(arg0: string, arg1: string) {
     // test using args from data provider
   }
 
-  @MochaTestBase.Test()
+  @TestBase.Test()
   public someTest() {
     // a single test
   }
 
-  @MochaTestBase.AfterEachTest()
+  @TestBase.AfterEachTest()
   public teardownTest() {
     // code to teardown test
   }
@@ -81,17 +84,20 @@ Install jest related packages `npm i jest ts-jest @types/jest --save-dev`
 
 ```typescript
 import should from "should";
-import {JestTestBase} from "@adityahegde/typescript-test-utils/dist/jest";
-import {DataProviderData} from "@adityahegde/typescript-test-utils";
+import {JestTestLibrary} from "@adityahegde/typescript-test-utils/dist/jest/JestTestLibrary";
+import {DataProviderData, TestBase} from "@adityahegde/typescript-test-utils";
 
-@JestTestBase.Suite
-export class SampleMochaTest extends JestTestBase {
-  @JestTestBase.BeforeSuite()
+// TestBase.TestLibrary dictates what underlying library to use. MochaTestLibrary for mocha
+@TestBase.Suite
+// TestLibrary declaration should come after TestBase.Suite
+@TestBase.TestLibrary(JestTestLibrary)
+export class SampleMochaTest extends TestBase {
+  @TestBase.BeforeSuite()
   public setupSuite() {
     // code to setup suite
   }
 
-  @JestTestBase.BeforeEachTest()
+  @TestBase.BeforeEachTest()
   public setupTest() {
     // code to setup test
   }
@@ -106,22 +112,22 @@ export class SampleMochaTest extends JestTestBase {
     };
   }
 
-  @JestTestBase.Test("dataProvider")
+  @TestBase.Test("dataProvider")
   public someTestUsingDataProvidor(arg0: string, arg1: string) {
     // test using args from data provider
   }
 
-  @JestTestBase.Test()
+  @TestBase.Test()
   public someTest() {
     // a single test
   }
 
-  @JestTestBase.AfterEachTest()
+  @TestBase.AfterEachTest()
   public teardownTest() {
     // code to teardown test
   }
 
-  @JestTestBase.AfterSuite()
+  @TestBase.AfterSuite()
   public teardownSuite() {
     // code to teardown suite
   }
@@ -133,13 +139,16 @@ It is possible to create a single test class with parameters.
 <br>This is helpful in integration tests of a composition based component. Real world example: https://github.com/AdityaHegde/typescript-framework/blob/main/test/functional/server/ResourceRestriction.test.ts#L23
 
 ```typescript
-import {MochaTestBase} from "@adityahegde/typescript-test-utils/dist/mocha";
 import should from "should";
+import {MochaTestLibrary} from "@adityahegde/typescript-test-utils/dist/mocha/MochaTestLibrary";
+import {DataProviderData, TestBase} from "@adityahegde/typescript-test-utils";
 
 // This class compares test title and expected title.
 // Can be anything here but should match the constructor of this class
-@MochaTestBase.ParameterizedSuite([0, 1, 2].map(idx => [`ParameterizedTest${idx}`, `ParameterizedTest${idx}`]))
-export class ParameterizedTestSpec extends MochaTestCommonBase {
+@TestBase.ParameterizedSuite([0, 1, 2].map(idx => [`ParameterizedTest${idx}`, `ParameterizedTest${idx}`]))
+// TestLibrary declaration should come after TestBase.ParameterizedSuite
+@TestBase.TestLibrary(MochaTestLibrary)
+export class ParameterizedTestSpec extends TestBase {
   private readonly expectedTitle: string;
 
   constructor(suiteTitle: string, expectedTitle: string) {
@@ -147,12 +156,12 @@ export class ParameterizedTestSpec extends MochaTestCommonBase {
     this.expectedTitle = expectedTitle;
   }
   
-  @MochaTestBase.BeforeSuite()
+  @TestBase.BeforeSuite()
   public setupSuite() {
     // code to setup suite
   }
 
-  @MochaTestBase.BeforeEachTest()
+  @TestBase.BeforeEachTest()
   public setupTest() {
     // code to setup test
   }
@@ -167,23 +176,23 @@ export class ParameterizedTestSpec extends MochaTestCommonBase {
     };
   }
 
-  @MochaTestBase.Test("dataProvider")
+  @TestBase.Test("dataProvider")
   public someTestUsingDataProvidor(arg0: string, arg1: string) {
     // test using args from data provider
   }
 
-  @MochaTestBase.Test()
+  @TestBase.Test()
   public someTest() {
     // a single test
     should(this.suiteTitle).be.equal(this.expectedTitle);
   }
 
-  @MochaTestBase.AfterEachTest()
+  @TestBase.AfterEachTest()
   public teardownTest() {
     // code to teardown test
   }
 
-  @MochaTestBase.AfterSuite()
+  @TestBase.AfterSuite()
   public teardownSuite() {
     // code to teardown suite
   }

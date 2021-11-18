@@ -4,8 +4,58 @@
 
 ## Table of contents
 
-### Modules
+### Classes
 
-- [index](modules/index.md)
-- [jest](modules/jest.md)
-- [mocha](modules/mocha.md)
+- [TestBase](classes/TestBase.md)
+
+### Type aliases
+
+- [DataProviderData](modules.md#dataproviderdata)
+
+### Functions
+
+- [getClassName](modules.md#getclassname)
+
+## Type aliases
+
+### DataProviderData
+
+Ƭ **DataProviderData**<`Type`\>: `Object`
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `Type` | `any` |
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `args?` | `Type` |
+| `subData?` | [`DataProviderData`](modules.md#dataproviderdata)<`Type`\>[] |
+| `title?` | `string` |
+
+#### Defined in
+
+[TestBase.ts:6](https://github.com/AdityaHegde/typescript-test-utils/blob/a88ec42/src/TestBase.ts#L6)
+
+## Functions
+
+### getClassName
+
+▸ **getClassName**(`clazz`): `any`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `clazz` | `any` |
+
+#### Returns
+
+`any`
+
+#### Defined in
+
+[getClassName.ts:4](https://github.com/AdityaHegde/typescript-test-utils/blob/a88ec42/src/getClassName.ts#L4)

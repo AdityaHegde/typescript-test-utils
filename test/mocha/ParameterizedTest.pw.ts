@@ -1,8 +1,10 @@
-import {MochaTestCommonBase} from "./MochaTestCommonBase";
 import should from "should";
+import {TestBase} from "../../src";
+import {MochaTestLibrary} from "../../src/mocha/MochaTestLibrary";
 
-@MochaTestCommonBase.ParameterizedSuite([0, 1, 2].map(idx => [`ParameterizedTest${idx}`, `ParameterizedTest${idx}`]))
-export class ParameterizedTestSpec extends MochaTestCommonBase {
+@TestBase.ParameterizedSuite([0, 1, 2].map(idx => [`ParameterizedTest${idx}`, `ParameterizedTest${idx}`]))
+@TestBase.TestLibrary(MochaTestLibrary)
+export class ParameterizedTestPw extends TestBase {
   private readonly expectedTitle: string;
 
   private setupCalled = false;
@@ -14,26 +16,24 @@ export class ParameterizedTestSpec extends MochaTestCommonBase {
     this.expectedTitle = expectedTitle;
   }
 
-  @MochaTestCommonBase.BeforeSuite()
+  @TestBase.BeforeSuite()
   public setupMochaTestBaseSpec() {
     this.setupCalled = true;
   }
 
-  @MochaTestCommonBase.BeforeEachTest()
+  @TestBase.BeforeEachTest()
   public setupTestMochaTestBaseSpec() {
     this.setupTestCalled = true;
   }
 
-  @MochaTestCommonBase.Test()
+  @TestBase.Test()
   public testLifecycle() {
-    should(this.baseSetupCalled).be.ok();
-    should(this.baseSetupTestCalled).be.ok();
     should(this.setupCalled).be.ok();
     should(this.setupTestCalled).be.ok();
     should(this.suiteTitle).be.equal(this.expectedTitle);
   }
 
-  @MochaTestCommonBase.AfterEachTest()
+  @TestBase.AfterEachTest()
   public teardownTestMochaTestBaseSpec() {
     this.teardownTestCalled = true;
   }

@@ -1,0 +1,15 @@
+<html lang="en">
+    <head><title>Playwright Test</title></head>
+    <body>
+        <span class="data">Page Loaded</span>
+        <input class="input" type="text"/>
+        <button class="enter" onclick="onClick()">Enter</button>
+        <script>
+            const inputText = document.querySelector(".input");
+            const dataText = document.querySelector(".data");
+            function onClick() {
+              dataText.innerHTML = `Data:${inputText.value}`;
+            }
+        </script>
+    </body>
+</html>

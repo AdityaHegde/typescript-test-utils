@@ -1,22 +1,23 @@
 import should from "should";
-import {MochaTestCommonBase} from "./MochaTestCommonBase";
-import {DataProviderData} from "../dist";
+import {DataProviderData} from "../../dist";
+import {TestBase} from "../../src";
+import {JestTestLibrary} from "../../src/jest/JestTestLibrary";
 
-@MochaTestCommonBase.Suite
-export class MochaTestBaseSpec extends MochaTestCommonBase {
+@TestBase.Suite
+@TestBase.TestLibrary(JestTestLibrary)
+export class JestTestBaseTest extends TestBase {
   private setupCalled = false;
   private setupTestCalled = false;
   private teardownTestCalled = false;
   private dataProviderArgs = [];
 
-  @MochaTestCommonBase.BeforeSuite()
-  public setupMochaTestBaseSpec() {
+  @TestBase.BeforeSuite()
+  public setup() {
     this.setupCalled = true;
-    should(this.baseSetupCalled).be.ok();
   }
 
-  @MochaTestCommonBase.BeforeEachTest()
-  public setupTestMochaTestBaseSpec() {
+  @TestBase.BeforeEachTest()
+  public setupTest() {
     this.setupTestCalled = true;
   }
 
@@ -42,36 +43,32 @@ export class MochaTestBaseSpec extends MochaTestCommonBase {
     };
   }
 
-  @MochaTestCommonBase.Test("dataProvider")
+  @TestBase.Test("dataProvider")
   public testDataProvider(arg0: string, arg1: string) {
     should(arg0).not.be.undefined();
     should(arg1).not.be.undefined();
     this.dataProviderArgs.push([arg0, arg1]);
   }
 
-  @MochaTestCommonBase.Test()
+  @TestBase.Test()
   public testLifecycle() {
-    should(this.baseSetupCalled).be.ok();
-    should(this.baseSetupTestCalled).be.ok();
     should(this.setupCalled).be.ok();
     should(this.setupTestCalled).be.ok();
   }
 
-  @MochaTestCommonBase.AfterEachTest()
-  public teardownTestMochaTestBaseSpec() {
+  @TestBase.AfterEachTest()
+  public teardownTest() {
     this.teardownTestCalled = true;
   }
 
-  @MochaTestCommonBase.AfterSuite()
-  public teardownMochaTestBaseSpec() {
-    should(this.baseTeardownTestCalled).be.ok();
-    should(this.baseTeardownCalled).not.be.ok();
+  @TestBase.AfterSuite()
+  public teardown() {
     should(this.teardownTestCalled).be.ok();
     should(this.dataProviderArgs).be.eql([
-      ["arg10", "arg11"],
-      ["arg010", "arg011"],
       ["arg0010", "arg0011"],
       ["arg0020", "arg0021"],
+      ["arg010", "arg011"],
+      ["arg10", "arg11"],
     ]);
   }
 }

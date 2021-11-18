@@ -1,69 +1,50 @@
 import sinon from "sinon";
-import { getClassName } from "./getClassName";
+import {getClassName} from "./getClassName";
+import {TestHookData, TestLibraryClassType, TestParams} from "./TestHookData";
+import {TestLibrary} from "./TestLibrary";
 
-type TestParams = {
-  propertyKey: string,
-  dataProvider: string,
-};
 export type DataProviderData<Type = any> = {
   title?: string;
   args?: Type;
   subData?: Array<DataProviderData<Type>>;
 };
-
-class TestHookData {
-  public before = new Array<string>();
-  public beforeEach = new Array<string>();
-  public tests = new Array<TestParams>();
-  public after = new Array<string>();
-  public afterEach = new Array<string>();
-
-  constructor(copyFrom?: TestHookData) {
-    if (copyFrom) {
-      this.before = [...copyFrom.before];
-      this.beforeEach = [...copyFrom.beforeEach];
-      this.tests = [...copyFrom.tests];
-      this.after = [...copyFrom.after];
-      this.afterEach = [...copyFrom.afterEach];
-    }
-  }
-}
+export type GetConstructorParams<T extends {new(...args: any)}> = T extends {new(...args: infer Args)} ? Args : never;
 
 /**
  */
-export abstract class TestBase {
+export class TestBase {
   protected static _testHookData = new TestHookData();
 
   protected sandbox: sinon.SinonSandbox;
+  protected testLibrary: TestLibrary;
 
   private testsStarted = false;
   protected readonly suiteTitle: string;
 
   constructor(suiteTitle: string) {
     this.suiteTitle = suiteTitle;
+    this.testLibrary = new (this.constructor as typeof TestBase)._testHookData.TestLibraryClass();
   }
 
   /**
    * Automatically adds the tests for the class. Useful when the test class is standalone.
    */
-  public static Suite(constructor: any) {
-    if (!constructor._testHookData) {
-      constructor._testHookData = new TestHookData();
-    }
-
+  public static Suite(constructor: typeof TestBase) {
+    constructor.createTestHookData(constructor);
     const instance = new constructor(getClassName(constructor));
     (instance as TestBase)._test();
   }
 
-  public static ParameterizedSuite(params: Array<any>) {
+  /**
+   *
+   * @param params
+   */
+  public static ParameterizedSuite<T extends {new(...args: any)}>(params: Array<GetConstructorParams<T>>) {
     return (constructor: any) => {
-      const testBase = constructor as typeof TestBase;
-      if (!testBase._testHookData) {
-        testBase._testHookData = new TestHookData();
-      }
+      constructor.createTestHookData(constructor as typeof TestBase);
 
       params.forEach(args => {
-        const instance = new constructor(...args);
+        const instance = new constructor(...(args as Array<any>));
         instance._test();
       });
     }
@@ -73,7 +54,7 @@ export abstract class TestBase {
    */
   public static BeforeSuite() {
     return (target: TestBase, propertyKey: string) => {
-      const constructor = TestBase.createTestHookData(target);
+      const constructor = TestBase.createTestHookData(target.constructor as typeof TestBase);
       constructor._testHookData.before.push(propertyKey);
     };
   }
@@ -82,7 +63,7 @@ export abstract class TestBase {
    */
   public static BeforeEachTest() {
     return (target: TestBase, propertyKey: string) => {
-      const constructor = TestBase.createTestHookData(target);
+      const constructor = TestBase.createTestHookData(target.constructor as typeof TestBase);
       constructor._testHookData.beforeEach.push(propertyKey);
     };
   }
@@ -91,7 +72,7 @@ export abstract class TestBase {
    */
   public static AfterSuite() {
     return (target: TestBase, propertyKey: string) => {
-      const constructor = TestBase.createTestHookData(target);
+      const constructor = TestBase.createTestHookData(target.constructor as typeof TestBase);
       constructor._testHookData.after.push(propertyKey);
     };
   }
@@ -100,7 +81,7 @@ export abstract class TestBase {
    */
   public static AfterEachTest() {
     return (target: TestBase, propertyKey: string) => {
-      const constructor = TestBase.createTestHookData(target);
+      const constructor = TestBase.createTestHookData(target.constructor as typeof TestBase);
       constructor._testHookData.afterEach.push(propertyKey);
     };
   }
@@ -109,11 +90,21 @@ export abstract class TestBase {
    */
   public static Test(dataProvider?: string) {
     return (target: TestBase, propertyKey: string) => {
-      const constructor = TestBase.createTestHookData(target);
+      const constructor = TestBase.createTestHookData(target.constructor as typeof TestBase);
       constructor._testHookData.tests.push({
         propertyKey,
         dataProvider,
       });
+    };
+  }
+
+  /**
+   * @param TestLibraryClass
+   */
+  public static TestLibrary(TestLibraryClass: TestLibraryClassType) {
+    return (constructor: any) => {
+      TestBase.createTestHookData(constructor);
+      constructor._testHookData.TestLibraryClass = TestLibraryClass;
     };
   }
 
@@ -127,27 +118,17 @@ export abstract class TestBase {
 
   /**
    */
-  protected abstract declareSuite(suiteTitle: string, suiteCallback: () => void);
+  protected declareSuite(suiteTitle: string, suiteCallback: () => void) {
+    this.testLibrary.declareSuite(suiteTitle, suiteCallback);
+  }
 
   /**
    */
-  protected abstract declareBefore(beforeCallback: () => Promise<void>);
-
-  /**
-   */
-  protected abstract declareBeforeEach(beforeEachCallback: () => Promise<void>);
-
-  /**
-   */
-  protected abstract declareTest(testTitle: string, testCallback: () => Promise<void>);
-
-  /**
-   */
-  protected abstract declareAfterEach(afterEachCallback: () => Promise<void>);
-
-  /**
-   */
-  protected abstract declareAfter(afterCallback: () => Promise<void>);
+  protected declareTest(testTitle: string, testMethodName: string, testArgs: Array<any>) {
+    this.testLibrary.declareTest(testTitle, async (...args) => {
+      return this[testMethodName](...testArgs, ...args);
+    });
+  }
 
   /**
    * @internal
@@ -155,24 +136,24 @@ export abstract class TestBase {
   private _test() {
     const testHookData = (this.constructor as typeof TestBase)._testHookData;
     this.declareSuite(this.suiteTitle, () => {
-      this.declareBefore(async () => {
-        await this._beforeWrapper();
+      this.testLibrary.declareBefore(async (...args: Array<any>) => {
+        await this._beforeWrapper(...args);
       });
 
-      this.declareBeforeEach(async () => {
-        await this._beforeEachWrapper();
+      this.testLibrary.declareBeforeEach(async (...args: Array<any>) => {
+        await this._beforeEachWrapper(...args);
       });
 
       testHookData.tests.forEach((testParams: TestParams) => {
         this.registerTest(testParams);
       });
 
-      this.declareAfterEach(async () => {
-        await this._afterEachWrapper();
+      this.testLibrary.declareAfterEach(async (...args: Array<any>) => {
+        await this._afterEachWrapper(...args);
       });
 
-      this.declareAfter(async () => {
-        await this._afterWrapper();
+      this.testLibrary.declareAfter(async (...args: Array<any>) => {
+        await this._afterWrapper(...args);
       });
     });
   }
@@ -180,24 +161,24 @@ export abstract class TestBase {
   /**
    * @internal
    */
-  private async _beforeWrapper() {
+  private async _beforeWrapper(...args: Array<any>) {
     this.sandbox = sinon.createSandbox();
 
     const testHookData = (this.constructor as typeof TestBase)._testHookData;
     for (const beforeFunction of testHookData.before) {
-      await this[beforeFunction]();
+      await this[beforeFunction](...args);
     }
   }
 
   /**
    * @internal
    */
-  private async _beforeEachWrapper() {
+  private async _beforeEachWrapper(...args: Array<any>) {
     this.sandbox.reset();
 
     const testHookData = (this.constructor as typeof TestBase)._testHookData;
     for (const beforeEachFunction of testHookData.beforeEach) {
-      await this[beforeEachFunction]();
+      await this[beforeEachFunction](...args);
     }
   }
 
@@ -208,9 +189,7 @@ export abstract class TestBase {
     if (testParams.dataProvider) {
       this.registerDataProvider(this[testParams.dataProvider](), testParams);
     } else {
-      this.declareTest(testParams.propertyKey, async () => {
-        await this[testParams.propertyKey]();
-      });
+      this.declareTest(testParams.propertyKey, testParams.propertyKey, []);
     }
   }
 
@@ -220,9 +199,7 @@ export abstract class TestBase {
   private registerDataProvider(data: DataProviderData, testParams: TestParams) {
     if (data.args) {
       this.declareTest(data.title || `Data(${data.args.map(arg => arg.toString()).join(",")})`,
-        async () => {
-          await this[testParams.propertyKey](...data.args);
-        });
+        testParams.propertyKey, data.args);
     } else if (data.subData) {
       this.declareSuite(data.title || testParams.propertyKey, () => {
         data.subData.forEach((_data) => {
@@ -235,20 +212,20 @@ export abstract class TestBase {
   /**
    * @internal
    */
-  private async _afterEachWrapper() {
+  private async _afterEachWrapper(...args: Array<any>) {
     const testHookData = (this.constructor as typeof TestBase)._testHookData;
     for (let i = testHookData.afterEach.length - 1; i >= 0; i--) {
-      await this[testHookData.afterEach[i]]();
+      await this[testHookData.afterEach[i]](...args);
     }
   }
 
   /**
    * @internal
    */
-  private async _afterWrapper() {
+  private async _afterWrapper(...args: Array<any>) {
     const testHookData = (this.constructor as typeof TestBase)._testHookData;
     for (let i = testHookData.after.length - 1; i >= 0; i--) {
-      await this[testHookData.after[i]]();
+      await this[testHookData.after[i]](...args);
     }
 
     this.sandbox.restore();
@@ -257,9 +234,7 @@ export abstract class TestBase {
   /**
    * @internal
    */
-  private static createTestHookData(target: any): typeof TestBase {
-    const constructor = target.constructor as typeof TestBase;
-
+  private static createTestHookData(constructor: typeof TestBase): typeof TestBase {
     if (!Object.prototype.hasOwnProperty.call(constructor, "_testHookData")) {
       constructor._testHookData = new TestHookData(constructor._testHookData);
     }

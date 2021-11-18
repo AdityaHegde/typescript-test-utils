@@ -1,12 +1,12 @@
 {
   "name": "@adityahegde/typescript-test-utils",
-  "version": "1.0.2",
+  "version": "1.1.1",
   "description": "Various testing utils for writing tests in TypeScript/JavaScript",
   "main": "dist/index.js",
   "scripts": {
     "build": "rm -rf dist/ && tsc -p tsconfig-build.json",
     "test": "npm run test-mocha && jest",
-    "test-mocha": "nyc mocha test/**/*.spec.ts",
+    "test-mocha": "nyc mocha test/mocha/*.spec.ts",
     "docs": "typedoc --out docs src/index.ts src/*/index.ts"
   },
   "author": "adityahegderocks@gmail.com",
@@ -22,7 +22,8 @@
     "decorators",
     "framework",
     "mocha",
-    "jest"
+    "jest",
+    "playwright"
   ],
   "mocha": {
     "ui": "bdd",
@@ -32,8 +33,7 @@
   },
   "jest": {
     "testMatch": [
-      "<rootDir>/test/**/*.jest.ts",
-      "<rootDir>/test/**/*.test.tsx"
+      "<rootDir>/test/jest/*.spec.ts"
     ],
     "preset": "ts-jest"
   },
@@ -56,6 +56,7 @@
   },
   "devDependencies": {
     "@adityahegde/misc-scripts": "^1.0.1",
+    "@playwright/test": "^1.16.3",
     "@types/jest": "^27.0.2",
     "@types/mocha": "^9.0.0",
     "@types/node": "^14.17.33",

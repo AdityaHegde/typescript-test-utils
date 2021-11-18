@@ -1,21 +1,22 @@
-import {JestTestBase} from "../src/jest";
 import should from "should";
-import {DataProviderData} from "../dist";
+import {MochaTestCommonBase} from "./MochaTestCommonBase";
+import {DataProviderData} from "../../dist";
 
-@JestTestBase.Suite
-export class JestTestBaseTest extends JestTestBase {
+@MochaTestCommonBase.Suite
+export class MochaTestBaseSpec extends MochaTestCommonBase {
   private setupCalled = false;
   private setupTestCalled = false;
   private teardownTestCalled = false;
   private dataProviderArgs = [];
 
-  @JestTestBase.BeforeSuite()
-  public setup() {
+  @MochaTestCommonBase.BeforeSuite()
+  public setupMochaTestBaseSpec() {
     this.setupCalled = true;
+    should(this.baseSetupCalled).be.ok();
   }
 
-  @JestTestBase.BeforeEachTest()
-  public setupTest() {
+  @MochaTestCommonBase.BeforeEachTest()
+  public setupTestMochaTestBaseSpec() {
     this.setupTestCalled = true;
   }
 
@@ -41,32 +42,36 @@ export class JestTestBaseTest extends JestTestBase {
     };
   }
 
-  @JestTestBase.Test("dataProvider")
+  @MochaTestCommonBase.Test("dataProvider")
   public testDataProvider(arg0: string, arg1: string) {
     should(arg0).not.be.undefined();
     should(arg1).not.be.undefined();
     this.dataProviderArgs.push([arg0, arg1]);
   }
 
-  @JestTestBase.Test()
+  @MochaTestCommonBase.Test()
   public testLifecycle() {
+    should(this.baseSetupCalled).be.ok();
+    should(this.baseSetupTestCalled).be.ok();
     should(this.setupCalled).be.ok();
     should(this.setupTestCalled).be.ok();
   }
 
-  @JestTestBase.AfterEachTest()
-  public teardownTest() {
+  @MochaTestCommonBase.AfterEachTest()
+  public teardownTestMochaTestBaseSpec() {
     this.teardownTestCalled = true;
   }
 
-  @JestTestBase.AfterSuite()
-  public teardown() {
+  @MochaTestCommonBase.AfterSuite()
+  public teardownMochaTestBaseSpec() {
+    should(this.baseTeardownTestCalled).be.ok();
+    should(this.baseTeardownCalled).not.be.ok();
     should(this.teardownTestCalled).be.ok();
     should(this.dataProviderArgs).be.eql([
+      ["arg10", "arg11"],
+      ["arg010", "arg011"],
       ["arg0010", "arg0011"],
       ["arg0020", "arg0021"],
-      ["arg010", "arg011"],
-      ["arg10", "arg11"],
     ]);
   }
 }
