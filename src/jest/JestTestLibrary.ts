@@ -25,7 +25,7 @@ export class JestTestLibrary extends TestLibrary {
 
   /**
    */
-  public declareTest(testTitle: string, testCallback: () => Promise<void>) {
+  public declareTest(testTitle: string, testCallback: (...args: Array<any>) => Promise<void>) {
     it(testTitle, testCallback);
   }
 

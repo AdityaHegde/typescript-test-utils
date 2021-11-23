@@ -1,16 +1,19 @@
 import {DataProviderData, TestBase} from "../../src";
-import {PlaywrightTestLibrary} from "../../src/playwright/PlaywrightTestLibrary";
 import {startServer} from "../server/server";
 import {expect, Page, PlaywrightTestArgs} from "@playwright/test";
 import should from "should";
+import {PlaywrightMochaTestLibrary} from "../../src/playwright/PlaywrightMochaTestLibrary";
+import {Server} from "http";
 
 @TestBase.Suite
-@TestBase.TestLibrary(PlaywrightTestLibrary)
+@TestBase.TestLibrary(PlaywrightMochaTestLibrary)
 export class PlaywrightTest extends TestBase {
   private setupCalled = false;
   private setupTestCalled = false;
   private teardownTestCalled = false;
   private dataProviderArgs = [];
+
+  private server: Server;
 
   private static readonly PORT = 8000;
   private static readonly URL = `http://localhost:${PlaywrightTest.PORT}/`;
@@ -19,7 +22,7 @@ export class PlaywrightTest extends TestBase {
   @TestBase.BeforeSuite()
   public async setup() {
     this.setupCalled = true;
-    await startServer(PlaywrightTest.PORT);
+    this.server = await startServer(PlaywrightTest.PORT);
   }
 
   @TestBase.BeforeEachTest()
@@ -56,7 +59,7 @@ export class PlaywrightTest extends TestBase {
     const input = page.locator(".input");
     await input.fill(arg0);
 
-    const button = page.locator(".button");
+    const button = page.locator(".enter");
     await button.click();
 
     await PlaywrightTest.assertDataText(page, arg1);
@@ -65,16 +68,16 @@ export class PlaywrightTest extends TestBase {
   }
 
   @TestBase.Test()
-  public testLifecycle() {
+  public async testLifecycle({page}) {
     should(this.setupCalled).be.ok();
     should(this.setupTestCalled).be.ok();
+
+    await page.goto(PlaywrightTest.URL);
+    await PlaywrightTest.assertDataText(page, "Page Loaded");
   }
 
   @TestBase.AfterEachTest()
-  public async teardownTest({page}) {
-    await page.goto(PlaywrightTest.URL);
-    await PlaywrightTest.assertDataText(page, "Page Loaded");
-
+  public teardownTest() {
     this.teardownTestCalled = true;
   }
 
@@ -82,11 +85,12 @@ export class PlaywrightTest extends TestBase {
   public teardown() {
     should(this.teardownTestCalled).be.ok();
     should(this.dataProviderArgs).be.eql([
-      ["arg0010", "arg0011"],
-      ["arg0020", "arg0021"],
-      ["arg010", "arg011"],
-      ["arg10", "arg11"],
+      ["arg10", "Data:arg10"],
+      ["arg010", "Data:arg010"],
+      ["arg0010", "Data:arg0010"],
+      ["arg0020", "Data:arg0020"],
     ]);
+    this.server.close();
   }
 
   private static async assertDataText(page: Page, expected: string) {

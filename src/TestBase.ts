@@ -17,13 +17,15 @@ export class TestBase {
 
   protected sandbox: sinon.SinonSandbox;
   protected testLibrary: TestLibrary;
+  protected suiteData: Record<any, any>;
 
   private testsStarted = false;
   protected readonly suiteTitle: string;
 
-  constructor(suiteTitle: string) {
+  constructor(suiteTitle: string, testData: Record<any, any>) {
     this.suiteTitle = suiteTitle;
     this.testLibrary = new (this.constructor as typeof TestBase)._testHookData.TestLibraryClass();
+    this.suiteData = testData;
   }
 
   /**
@@ -31,7 +33,7 @@ export class TestBase {
    */
   public static Suite(constructor: typeof TestBase) {
     constructor.createTestHookData(constructor);
-    const instance = new constructor(getClassName(constructor));
+    const instance = new constructor(getClassName(constructor), {});
     (instance as TestBase)._test();
   }
 
@@ -39,12 +41,12 @@ export class TestBase {
    *
    * @param params
    */
-  public static ParameterizedSuite<T extends {new(...args: any)}>(params: Array<GetConstructorParams<T>>) {
-    return (constructor: any) => {
+  public static ParameterizedSuite<R extends Record<any, any>>(params: Array<[string, R]>) {
+    return (constructor: typeof TestBase) => {
       constructor.createTestHookData(constructor as typeof TestBase);
 
       params.forEach(args => {
-        const instance = new constructor(...(args as Array<any>));
+        const instance = new constructor(args[0], args[1]);
         instance._test();
       });
     }
@@ -125,8 +127,11 @@ export class TestBase {
   /**
    */
   protected declareTest(testTitle: string, testMethodName: string, testArgs: Array<any>) {
-    this.testLibrary.declareTest(testTitle, async (...args) => {
-      return this[testMethodName](...testArgs, ...args);
+    this.testLibrary.declareTest(testTitle, async (...args: Array<any>) => {
+      const context = await this.testLibrary.setupTest();
+      args.push(context);
+      await this[testMethodName](...testArgs, ...args);
+      await this.testLibrary.teardownTest(context);
     });
   }
 
@@ -165,6 +170,7 @@ export class TestBase {
     this.sandbox = sinon.createSandbox();
 
     const testHookData = (this.constructor as typeof TestBase)._testHookData;
+    await this.testLibrary.setupSuite();
     for (const beforeFunction of testHookData.before) {
       await this[beforeFunction](...args);
     }
@@ -224,6 +230,7 @@ export class TestBase {
    */
   private async _afterWrapper(...args: Array<any>) {
     const testHookData = (this.constructor as typeof TestBase)._testHookData;
+    await this.testLibrary.teardownSuite();
     for (let i = testHookData.after.length - 1; i >= 0; i--) {
       await this[testHookData.after[i]](...args);
     }

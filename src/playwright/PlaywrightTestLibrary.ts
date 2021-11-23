@@ -14,7 +14,7 @@ export class PlaywrightTestLibrary extends TestLibrary {
     test.beforeEach(beforeEachCallback);
   }
 
-  public declareTest(testTitle: string, testCallback: () => Promise<void>) {
+  public declareTest(testTitle: string, testCallback: (...args: Array<any>) => Promise<void>) {
     test(testTitle, testCallback);
   }
 

@@ -38,7 +38,7 @@
 
 #### Defined in
 
-[TestBase.ts:6](https://github.com/AdityaHegde/typescript-test-utils/blob/a88ec42/src/TestBase.ts#L6)
+[TestBase.ts:6](https://github.com/AdityaHegde/typescript-test-utils/blob/2f729df/src/TestBase.ts#L6)
 
 ## Functions
 
@@ -58,4 +58,4 @@
 
 #### Defined in
 
-[getClassName.ts:4](https://github.com/AdityaHegde/typescript-test-utils/blob/a88ec42/src/getClassName.ts#L4)
+[getClassName.ts:4](https://github.com/AdityaHegde/typescript-test-utils/blob/2f729df/src/getClassName.ts#L4)

@@ -1,11 +1,14 @@
-import {createServer} from "http";
+import {createServer, Server} from "http";
 import {readFileSync} from "fs";
 
 export async function startServer(port: number) {
-  return new Promise<void>(resolve => {
-    createServer((req, res) => {
+  return new Promise<Server>(resolve => {
+    const server = createServer((req, res) => {
       res.write(readFileSync(`${__dirname}/index.html`));
       res.end();
-    }).listen(port, resolve);
+    });
+    server.listen(port, () => {
+      resolve(server);
+    });
   })
 }

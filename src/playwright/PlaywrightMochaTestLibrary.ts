@@ -1,7 +1,10 @@
 import "mocha";
+import {chromium, Page, Browser} from "playwright";
 import {TestLibrary} from "../TestLibrary";
 
-export class MochaTestLibrary extends TestLibrary {
+export class PlaywrightMochaTestLibrary extends TestLibrary {
+  private browser: Browser;
+
   /**
    */
   public declareSuite(suiteTitle: string, suiteCallback: () => void) {
@@ -36,5 +39,29 @@ export class MochaTestLibrary extends TestLibrary {
    */
   public declareAfter(afterCallback: () => Promise<void>) {
     after(afterCallback);
+  }
+
+  /**
+   */
+  public async setupSuite(): Promise<void> {
+    this.browser = await chromium.launch();
+  }
+
+  /**
+   */
+  public async setupTest(): Promise<Record<any, any>> {
+    return {page: await this.browser.newPage()};
+  }
+
+  /**
+   */
+  public async teardownTest({page}: {page: Page}): Promise<void> {
+    await page?.close();
+  }
+
+  /**
+   */
+  public async teardownSuite(): Promise<void> {
+    await this.browser?.close();
   }
 }
