@@ -138,13 +138,17 @@ Using playwright's runner is not supported until custom tsconfig is supported th
 
 ```typescript
 import should from "should";
-import {PlaywrightMochaTestLibrary} from "@adityahegde/typescript-test-utils/dist/playwright/PlaywrightMochaTestLibrary";
+import {MochaTestLibrary} from "@adityahegde/typescript-test-utils/dist/mocha/MochaTestLibrary";
+import {PlaywrightSuiteSetup} from "@adityahegde/typescript-test-utils/dist/playwright/PlaywrightSuiteSetup";
 import {DataProviderData, TestBase} from "@adityahegde/typescript-test-utils";
 
 // TestBase.TestLibrary dictates what underlying library to use. MochaTestLibrary for mocha
 @TestBase.Suite
-// TestLibrary declaration should come after TestBase.Suite
-@TestBase.TestLibrary(PlaywrightMochaTestLibrary)
+// TestLibrary declaration should come after TestBase.Suite. Uses mocha here, can be swapped with jest also.
+@TestBase.TestLibrary(MochaTestLibrary)
+// Adds a playwright implementation of TestSuiteSetup that starts a browser and creates a new page per test.
+// Must come after TestBase.Suite
+@TestBase.TestSuiteSetup(PlaywrightSuiteSetup)
 export class PlaywrightTest extends TestBase {
   @TestBase.BeforeSuite()
   public setupSuite() {
@@ -215,19 +219,18 @@ import should from "should";
 import {MochaTestLibrary} from "@adityahegde/typescript-test-utils/dist/mocha/MochaTestLibrary";
 import {DataProviderData, TestBase} from "@adityahegde/typescript-test-utils";
 
-// This class compares test title and expected title.
-// Can be anything here but should match the constructor of this class
-// 1st parameter in the array is the title of the test. 2nd parameter is a free form json Record.
-// Use the record through suiteData variable.
-@TestBase.ParameterizedSuite([0, 1, 2].map(idx => [`ParameterizedTest${idx}`, {expectedTitle: `ParameterizedTest${idx}`}]))
+// This class compares suite title and expected title.
+// Can be anything here but should have the mandatory suiteTitle
+// Use the param through suiteData variable in the class.
+@TestBase.ParameterizedSuite([0, 1, 2].map(idx => {
+  return {
+    suiteTitle: `ParameterizedTest${idx}`,
+    expectedTitle: `ParameterizedTest${idx}`,
+  }
+}))
 // TestLibrary declaration should come after TestBase.ParameterizedSuite
 @TestBase.TestLibrary(MochaTestLibrary)
 export class ParameterizedTestSpec extends TestBase {
-  constructor(suiteTitle: string, expectedTitle: string) {
-    super(suiteTitle);
-    this.expectedTitle = expectedTitle;
-  }
-  
   @TestBase.BeforeSuite()
   public setupSuite() {
     // code to setup suite
@@ -267,6 +270,39 @@ export class ParameterizedTestSpec extends TestBase {
   @TestBase.AfterSuite()
   public teardownSuite() {
     // code to teardown suite
+  }
+}
+```
+
+## TestSuiteSetup
+If inheritance based code sharing in tests is not desired, TestSuiteSetup can be used to add composition based isolated setup.
+
+Implement respective methods to setup and teardown the suite and tests.
+<br>setupTest and teardownTest are passed the testSuiteParameter from parameterised suits and a free form context object.
+<br>Use this context to store test specific variables. The last param to each test will be this context. Check test/mocha/PlaywrightTest.spec.ts for more details on how the context is used.
+
+```typescript
+import {TestSuiteSetup} from "@adityahegde/typescript-test-utils";
+
+export class MyTestSuiteSetupImpl extends TestSuiteSetup {
+  public setupSuite(testSuiteParameter: TestSuiteParameter): Promise<void> {
+    // setup the suite using testSuiteParameter
+    return Promise.resolve();
+  }
+
+  public setupTest(testSuiteParameter: TestSuiteParameter, testContext: Record<any, any>): Promise<void> {
+    // setup the test using testSuiteParameter and store and variables needed in tests in testContext
+    return Promise.resolve();
+  }
+
+  public teardownTest(testSuiteParameter: TestSuiteParameter, testContext: Record<any, any>): Promise<void> {
+    // teardown the test using the variables in testContext
+    return Promise.resolve();
+  }
+
+  public teardownSuite(testSuiteParameter: TestSuiteParameter): Promise<void> {
+    // teardown the suite
+    return Promise.resolve();
   }
 }
 ```

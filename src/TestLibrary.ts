@@ -25,28 +25,4 @@ export abstract class TestLibrary {
   /**
    */
   public abstract declareAfter(afterCallback: () => Promise<void>): void;
-
-  /**
-   */
-  public setupSuite(): Promise<void> {
-    return Promise.resolve(undefined);
-  }
-
-  /**
-   */
-  public setupTest(): Promise<Record<any, any>> {
-    return Promise.resolve(undefined);
-  }
-
-  /**
-   */
-  public teardownTest(context: Record<any, any>): Promise<void> {
-    return Promise.resolve(undefined);
-  }
-
-  /**
-   */
-  public teardownSuite(): Promise<void> {
-    return Promise.resolve(undefined);
-  }
 }

@@ -1,6 +1,7 @@
 import {JestTestLibrary} from "./jest/JestTestLibrary";
 import {MochaTestLibrary} from "./mocha/MochaTestLibrary";
 import {PlaywrightTestLibrary} from "./playwright/PlaywrightTestLibrary";
+import {TestSuiteSetup} from "./TestSuiteSetup";
 
 export type TestParams = {
   propertyKey: string,
@@ -16,6 +17,7 @@ export class TestHookData {
   public after = new Array<string>();
   public afterEach = new Array<string>();
   public TestLibraryClass: TestLibraryClassType;
+  public TestSuiteSetupClasses = new Set<typeof TestSuiteSetup>();
 
   constructor(copyFrom?: TestHookData) {
     if (copyFrom) {
@@ -25,6 +27,7 @@ export class TestHookData {
       this.after = [...copyFrom.after];
       this.afterEach = [...copyFrom.afterEach];
       this.TestLibraryClass = copyFrom.TestLibraryClass;
+      this.TestSuiteSetupClasses = new Set(copyFrom.TestSuiteSetupClasses);
     }
   }
 }

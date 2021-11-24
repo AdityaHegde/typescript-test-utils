@@ -2,27 +2,42 @@ import {DataProviderData, TestBase} from "../../src";
 import {startServer} from "../server/server";
 import {expect, Page, PlaywrightTestArgs} from "@playwright/test";
 import should from "should";
-import {PlaywrightMochaTestLibrary} from "../../src/playwright/PlaywrightMochaTestLibrary";
 import {Server} from "http";
+import {MochaTestLibrary} from "../../src/mocha/MochaTestLibrary";
+import {PlaywrightSuiteSetup} from "../../src/playwright/PlaywrightSuiteSetup";
+import {TestSuiteParameter} from "../../src/TestBase";
+
+const PORT = 8000;
+const URL = `http://localhost:${PORT}/`;
+
+class ServerSetup extends PlaywrightSuiteSetup {
+  private server: Server;
+
+  public async setupSuite(testSuiteParameter: TestSuiteParameter): Promise<void> {
+    this.server = await startServer(PORT);
+    await super.setupSuite(testSuiteParameter);
+  }
+
+  public async teardownSuite(testSuiteParameter: TestSuiteParameter): Promise<void> {
+    await new Promise(resolve => {
+      this.server.close(resolve);
+    });
+    await super.teardownSuite(testSuiteParameter);
+  }
+}
 
 @TestBase.Suite
-@TestBase.TestLibrary(PlaywrightMochaTestLibrary)
+@TestBase.TestLibrary(MochaTestLibrary)
+@TestBase.TestSuiteSetup(ServerSetup)
 export class PlaywrightTest extends TestBase {
   private setupCalled = false;
   private setupTestCalled = false;
   private teardownTestCalled = false;
   private dataProviderArgs = [];
 
-  private server: Server;
-
-  private static readonly PORT = 8000;
-  private static readonly URL = `http://localhost:${PlaywrightTest.PORT}/`;
-  private static readonly DATA_CSS = ".data";
-
   @TestBase.BeforeSuite()
   public async setup() {
     this.setupCalled = true;
-    this.server = await startServer(PlaywrightTest.PORT);
   }
 
   @TestBase.BeforeEachTest()
@@ -54,7 +69,7 @@ export class PlaywrightTest extends TestBase {
 
   @TestBase.Test("dataProvider")
   public async testDataProvider(arg0: string, arg1: string, {page}: PlaywrightTestArgs) {
-    await page.goto(PlaywrightTest.URL);
+    await page.goto(URL);
 
     const input = page.locator(".input");
     await input.fill(arg0);
@@ -72,7 +87,7 @@ export class PlaywrightTest extends TestBase {
     should(this.setupCalled).be.ok();
     should(this.setupTestCalled).be.ok();
 
-    await page.goto(PlaywrightTest.URL);
+    await page.goto(URL);
     await PlaywrightTest.assertDataText(page, "Page Loaded");
   }
 
@@ -90,11 +105,10 @@ export class PlaywrightTest extends TestBase {
       ["arg0010", "Data:arg0010"],
       ["arg0020", "Data:arg0020"],
     ]);
-    this.server.close();
   }
 
   private static async assertDataText(page: Page, expected: string) {
-    const data = page.locator(PlaywrightTest.DATA_CSS);
+    const data = page.locator(".data");
     await expect(data).toHaveText(expected);
   }
 }

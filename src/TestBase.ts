@@ -2,13 +2,17 @@ import sinon from "sinon";
 import {getClassName} from "./getClassName";
 import {TestHookData, TestLibraryClassType, TestParams} from "./TestHookData";
 import {TestLibrary} from "./TestLibrary";
+import {TestSuiteSetup} from "./TestSuiteSetup";
 
 export type DataProviderData<Type = any> = {
   title?: string;
   args?: Type;
   subData?: Array<DataProviderData<Type>>;
 };
-export type GetConstructorParams<T extends {new(...args: any)}> = T extends {new(...args: infer Args)} ? Args : never;
+export type TestSuiteParameter = {
+  suiteTitle: string;
+  TestSuiteSetupClasses?: Array<typeof TestSuiteSetup>;
+} & Record<any, any>;
 
 /**
  */
@@ -17,15 +21,20 @@ export class TestBase {
 
   protected sandbox: sinon.SinonSandbox;
   protected testLibrary: TestLibrary;
-  protected suiteData: Record<any, any>;
+  protected testSuiteSetups = new Array<TestSuiteSetup>();
+  protected testSuiteParameter: TestSuiteParameter;
 
   private testsStarted = false;
   protected readonly suiteTitle: string;
 
-  constructor(suiteTitle: string, testData: Record<any, any>) {
-    this.suiteTitle = suiteTitle;
-    this.testLibrary = new (this.constructor as typeof TestBase)._testHookData.TestLibraryClass();
-    this.suiteData = testData;
+  constructor(testSuiteParameter: TestSuiteParameter) {
+    this.suiteTitle = testSuiteParameter.suiteTitle;
+    this.testSuiteParameter = testSuiteParameter;
+
+    const Clazz = (this.constructor as typeof TestBase);
+    this.testLibrary = new Clazz._testHookData.TestLibraryClass();
+    new Set([...Clazz._testHookData.TestSuiteSetupClasses, ...(testSuiteParameter.TestSuiteSetupClasses ?? [])])
+      .forEach(TestSuiteSetupClass => this.testSuiteSetups.push(new TestSuiteSetupClass()));
   }
 
   /**
@@ -33,7 +42,7 @@ export class TestBase {
    */
   public static Suite(constructor: typeof TestBase) {
     constructor.createTestHookData(constructor);
-    const instance = new constructor(getClassName(constructor), {});
+    const instance = new constructor({suiteTitle: getClassName(constructor)});
     (instance as TestBase)._test();
   }
 
@@ -41,12 +50,12 @@ export class TestBase {
    *
    * @param params
    */
-  public static ParameterizedSuite<R extends Record<any, any>>(params: Array<[string, R]>) {
+  public static ParameterizedSuite(params: Array<TestSuiteParameter>) {
     return (constructor: typeof TestBase) => {
       constructor.createTestHookData(constructor as typeof TestBase);
 
-      params.forEach(args => {
-        const instance = new constructor(args[0], args[1]);
+      params.forEach(param => {
+        const instance = new constructor(param);
         instance._test();
       });
     }
@@ -104,9 +113,19 @@ export class TestBase {
    * @param TestLibraryClass
    */
   public static TestLibrary(TestLibraryClass: TestLibraryClassType) {
-    return (constructor: any) => {
+    return (constructor: typeof TestBase) => {
       TestBase.createTestHookData(constructor);
       constructor._testHookData.TestLibraryClass = TestLibraryClass;
+    };
+  }
+
+  /**
+   * @param TestSuiteSetupClass
+   */
+  public static TestSuiteSetup(TestSuiteSetupClass: typeof TestSuiteSetup) {
+    return (constructor: typeof TestBase) => {
+      TestBase.createTestHookData(constructor);
+      constructor._testHookData.TestSuiteSetupClasses.add(TestSuiteSetupClass);
     };
   }
 
@@ -128,10 +147,14 @@ export class TestBase {
    */
   protected declareTest(testTitle: string, testMethodName: string, testArgs: Array<any>) {
     this.testLibrary.declareTest(testTitle, async (...args: Array<any>) => {
-      const context = await this.testLibrary.setupTest();
-      args.push(context);
+      const testContext: Record<any, any> = {};
+      args.push(testContext);
+
+      await Promise.all(this.testSuiteSetups.map(testSuiteSetup =>
+        testSuiteSetup.setupTest(this.testSuiteParameter, testContext)));
       await this[testMethodName](...testArgs, ...args);
-      await this.testLibrary.teardownTest(context);
+      await Promise.all(this.testSuiteSetups.map(testSuiteSetup =>
+        testSuiteSetup.teardownTest(this.testSuiteParameter, testContext)));
     });
   }
 
@@ -170,7 +193,7 @@ export class TestBase {
     this.sandbox = sinon.createSandbox();
 
     const testHookData = (this.constructor as typeof TestBase)._testHookData;
-    await this.testLibrary.setupSuite();
+    await Promise.all(this.testSuiteSetups.map(testSuiteSetup => testSuiteSetup.setupSuite(this.testSuiteParameter)));
     for (const beforeFunction of testHookData.before) {
       await this[beforeFunction](...args);
     }
@@ -230,10 +253,10 @@ export class TestBase {
    */
   private async _afterWrapper(...args: Array<any>) {
     const testHookData = (this.constructor as typeof TestBase)._testHookData;
-    await this.testLibrary.teardownSuite();
     for (let i = testHookData.after.length - 1; i >= 0; i--) {
       await this[testHookData.after[i]](...args);
     }
+    await Promise.all(this.testSuiteSetups.map(testSuiteSetup => testSuiteSetup.teardownSuite(this.testSuiteParameter)));
 
     this.sandbox.restore();
   }

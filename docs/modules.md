@@ -7,10 +7,12 @@
 ### Classes
 
 - [TestBase](classes/TestBase.md)
+- [TestSuiteSetup](classes/TestSuiteSetup.md)
 
 ### Type aliases
 
 - [DataProviderData](modules.md#dataproviderdata)
+- [TestSuiteParameter](modules.md#testsuiteparameter)
 
 ### Functions
 
@@ -38,7 +40,17 @@
 
 #### Defined in
 
-[TestBase.ts:6](https://github.com/AdityaHegde/typescript-test-utils/blob/2f729df/src/TestBase.ts#L6)
+[TestBase.ts:7](https://github.com/AdityaHegde/typescript-test-utils/blob/91b507f/src/TestBase.ts#L7)
+
+___
+
+### TestSuiteParameter
+
+Ƭ **TestSuiteParameter**: { `TestSuiteSetupClasses?`: typeof [`TestSuiteSetup`](classes/TestSuiteSetup.md)[] ; `suiteTitle`: `string`  } & `Record`<`any`, `any`\>
+
+#### Defined in
+
+[TestBase.ts:12](https://github.com/AdityaHegde/typescript-test-utils/blob/91b507f/src/TestBase.ts#L12)
 
 ## Functions
 
@@ -58,4 +70,4 @@
 
 #### Defined in
 
-[getClassName.ts:4](https://github.com/AdityaHegde/typescript-test-utils/blob/2f729df/src/getClassName.ts#L4)
+[getClassName.ts:4](https://github.com/AdityaHegde/typescript-test-utils/blob/91b507f/src/getClassName.ts#L4)
