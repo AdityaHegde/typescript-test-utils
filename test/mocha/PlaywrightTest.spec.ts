@@ -1,34 +1,34 @@
-import {DataProviderData, TestBase} from "../../src";
+import {DataProviderData, TestBase, TestSuiteSetup} from "../../src";
 import {startServer} from "../server/server";
 import {expect, Page, PlaywrightTestArgs} from "@playwright/test";
 import should from "should";
 import {Server} from "http";
 import {MochaTestLibrary} from "../../src/mocha/MochaTestLibrary";
 import {PlaywrightSuiteSetup} from "../../src/playwright/PlaywrightSuiteSetup";
-import {TestSuiteParameter} from "../../src/TestBase";
+import {TestSuiteParameter} from "../../src";
 
 const PORT = 8000;
 const URL = `http://localhost:${PORT}/`;
 
-class ServerSetup extends PlaywrightSuiteSetup {
+class ServerSetup extends TestSuiteSetup {
   private server: Server;
 
   public async setupSuite(testSuiteParameter: TestSuiteParameter): Promise<void> {
     this.server = await startServer(PORT);
-    await super.setupSuite(testSuiteParameter);
   }
 
   public async teardownSuite(testSuiteParameter: TestSuiteParameter): Promise<void> {
     await new Promise(resolve => {
       this.server.close(resolve);
     });
-    await super.teardownSuite(testSuiteParameter);
   }
 }
 
 @TestBase.Suite
 @TestBase.TestLibrary(MochaTestLibrary)
+// Multiple TestSuiteSetup can be added
 @TestBase.TestSuiteSetup(ServerSetup)
+@TestBase.TestSuiteSetup(PlaywrightSuiteSetup)
 export class PlaywrightTest extends TestBase {
   private setupCalled = false;
   private setupTestCalled = false;

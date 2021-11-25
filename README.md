@@ -306,3 +306,13 @@ export class MyTestSuiteSetupImpl extends TestSuiteSetup {
   }
 }
 ```
+
+Add these TestSuiteSetup using,
+```typescript
+@TestBase.TestSuiteSetup(MyTestSuiteSetupImpl)
+// Multiple TestSuiteSetup can be added
+@TestBase.TestSuiteSetup(SomeOtherTestSuiteSetupImpl)
+class MyTest extends TestBase {
+  // ...
+}
+```
