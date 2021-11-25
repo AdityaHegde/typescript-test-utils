@@ -1,4 +1,3 @@
-import "mocha";
 import {chromium, Page, Browser} from "playwright";
 import {TestSuiteSetup} from "../TestSuiteSetup";
 import {TestSuiteParameter} from "../TestBase";
