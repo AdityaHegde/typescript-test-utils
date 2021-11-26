@@ -8,7 +8,7 @@ export class PlaywrightSuiteSetup extends TestSuiteSetup {
   /**
    */
   public async setupSuite(testSuiteParameter: TestSuiteParameter): Promise<void> {
-    this.browser = await chromium.launch();
+    this.browser = await chromium.launch(testSuiteParameter.browserLaunchOptions ?? {});
   }
 
   /**

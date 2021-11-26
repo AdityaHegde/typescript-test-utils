@@ -137,6 +137,7 @@ export class SampleMochaTest extends TestBase {
 ### playwright
 Using playwright's runner is not supported until custom tsconfig is supported there. Uses mocha currently.
 <br>Install playwright and mocha related packages `npm i mocha playwright @types/mocha --save-dev`
+<br>Pass browserLaunchOptions in TestBase.ParameterizedSuite to override launch options.
 
 ```typescript
 import should from "should";
