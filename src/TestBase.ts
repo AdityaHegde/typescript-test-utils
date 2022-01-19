@@ -1,8 +1,8 @@
 import sinon from "sinon";
 import {getClassName} from "./getClassName";
-import {TestHookData, TestLibraryClassType, TestParams} from "./TestHookData";
-import {TestLibrary} from "./TestLibrary";
-import {TestSuiteSetup} from "./TestSuiteSetup";
+import {TestHookData, TestParams} from "./TestHookData";
+import {TestLibrary, TestLibraryClassType} from "./TestLibrary";
+import {TestSuiteSetup, TestSuiteSetupClassType} from "./TestSuiteSetup";
 
 export type DataProviderData<Type = any> = {
   title?: string;
@@ -10,28 +10,32 @@ export type DataProviderData<Type = any> = {
   subData?: Array<DataProviderData<Type>>;
 };
 export type TestSuiteParameter = {
-  suiteTitle: string;
-  TestSuiteSetupClasses?: Array<typeof TestSuiteSetup>;
-} & Record<any, any>;
+  suiteTitle?: string;
+  TestSuiteSetupClasses?: Array<TestSuiteSetupClassType>;
+};
+
+export type TestBaseClass<Parameter extends TestSuiteParameter> =
+  { new(testSuiteParameter: Parameter): TestBase<Parameter>, _testHookData: TestHookData };
 
 /**
  */
-export class TestBase {
-  protected static _testHookData = new TestHookData();
+export class TestBase<Parameter extends TestSuiteParameter = TestSuiteParameter> {
+  // TODO: find a way to make this private and include in TestBaseClass
+  public static _testHookData = new TestHookData();
 
   protected sandbox: sinon.SinonSandbox;
   protected testLibrary: TestLibrary;
   protected testSuiteSetups = new Array<TestSuiteSetup>();
-  protected testSuiteParameter: TestSuiteParameter;
+  protected testSuiteParameter: Parameter;
 
   private testsStarted = false;
   protected readonly suiteTitle: string;
 
-  constructor(testSuiteParameter: TestSuiteParameter) {
+  constructor(testSuiteParameter: Parameter) {
     this.suiteTitle = testSuiteParameter.suiteTitle;
     this.testSuiteParameter = testSuiteParameter;
 
-    const Clazz = (this.constructor as typeof TestBase);
+    const Clazz = (this.constructor as TestBaseClass<any>);
     this.testLibrary = new Clazz._testHookData.TestLibraryClass();
     new Set([...Clazz._testHookData.TestSuiteSetupClasses, ...(testSuiteParameter.TestSuiteSetupClasses ?? [])])
       .forEach(TestSuiteSetupClass => this.testSuiteSetups.push(new TestSuiteSetupClass()));
@@ -40,21 +44,26 @@ export class TestBase {
   /**
    * Automatically adds the tests for the class. Useful when the test class is standalone.
    */
-  public static Suite(constructor: typeof TestBase) {
-    constructor.createTestHookData(constructor);
+  public static Suite(constructor: TestBaseClass<any>) {
+    TestBase.createTestHookData(constructor);
     const instance = new constructor({suiteTitle: getClassName(constructor)});
     (instance as TestBase)._test();
   }
 
   /**
-   *
    * @param params
    */
-  public static ParameterizedSuite(params: Array<TestSuiteParameter>) {
-    return (constructor: typeof TestBase) => {
-      constructor.createTestHookData(constructor as typeof TestBase);
+  public static ParameterizedSuite<
+    P extends TestSuiteParameter,
+    C extends TestBaseClass<P>,
+  >(params: Array<P>): (c: C) => void {
+    return (constructor: C) => {
+      TestBase.createTestHookData(constructor as any);
 
       params.forEach(param => {
+        if (!param.suiteTitle) {
+          param.suiteTitle = getClassName(constructor);
+        }
         const instance = new constructor(param);
         instance._test();
       });
@@ -65,7 +74,7 @@ export class TestBase {
    */
   public static BeforeSuite() {
     return (target: TestBase, propertyKey: string) => {
-      const constructor = TestBase.createTestHookData(target.constructor as typeof TestBase);
+      const constructor = TestBase.createTestHookData(target.constructor as TestBaseClass<any>);
       constructor._testHookData.before.push(propertyKey);
     };
   }
@@ -74,7 +83,7 @@ export class TestBase {
    */
   public static BeforeEachTest() {
     return (target: TestBase, propertyKey: string) => {
-      const constructor = TestBase.createTestHookData(target.constructor as typeof TestBase);
+      const constructor = TestBase.createTestHookData(target.constructor as TestBaseClass<any>);
       constructor._testHookData.beforeEach.push(propertyKey);
     };
   }
@@ -83,7 +92,7 @@ export class TestBase {
    */
   public static AfterSuite() {
     return (target: TestBase, propertyKey: string) => {
-      const constructor = TestBase.createTestHookData(target.constructor as typeof TestBase);
+      const constructor = TestBase.createTestHookData(target.constructor as TestBaseClass<any>);
       constructor._testHookData.after.push(propertyKey);
     };
   }
@@ -92,7 +101,7 @@ export class TestBase {
    */
   public static AfterEachTest() {
     return (target: TestBase, propertyKey: string) => {
-      const constructor = TestBase.createTestHookData(target.constructor as typeof TestBase);
+      const constructor = TestBase.createTestHookData(target.constructor as TestBaseClass<any>);
       constructor._testHookData.afterEach.push(propertyKey);
     };
   }
@@ -101,7 +110,7 @@ export class TestBase {
    */
   public static Test(dataProvider?: string) {
     return (target: TestBase, propertyKey: string) => {
-      const constructor = TestBase.createTestHookData(target.constructor as typeof TestBase);
+      const constructor = TestBase.createTestHookData(target.constructor as TestBaseClass<any>);
       constructor._testHookData.tests.push({
         propertyKey,
         dataProvider,
@@ -112,8 +121,11 @@ export class TestBase {
   /**
    * @param TestLibraryClass
    */
-  public static TestLibrary(TestLibraryClass: TestLibraryClassType) {
-    return (constructor: typeof TestBase) => {
+  public static TestLibrary<
+    P extends TestSuiteParameter,
+    C extends TestBaseClass<P>,
+  >(TestLibraryClass: TestLibraryClassType): (c: C) => void {
+    return (constructor: C) => {
       TestBase.createTestHookData(constructor);
       constructor._testHookData.TestLibraryClass = TestLibraryClass;
     };
@@ -122,8 +134,8 @@ export class TestBase {
   /**
    * @param TestSuiteSetupClass
    */
-  public static TestSuiteSetup(TestSuiteSetupClass: typeof TestSuiteSetup) {
-    return (constructor: typeof TestBase) => {
+  public static TestSuiteSetup(TestSuiteSetupClass: TestSuiteSetupClassType) {
+    return (constructor: TestBaseClass<any>) => {
       TestBase.createTestHookData(constructor);
       constructor._testHookData.TestSuiteSetupClasses.add(TestSuiteSetupClass);
     };
@@ -264,7 +276,7 @@ export class TestBase {
   /**
    * @internal
    */
-  private static createTestHookData(constructor: typeof TestBase): typeof TestBase {
+  private static createTestHookData(constructor: TestBaseClass<any>): TestBaseClass<any> {
     if (!Object.prototype.hasOwnProperty.call(constructor, "_testHookData")) {
       constructor._testHookData = new TestHookData(constructor._testHookData);
     }

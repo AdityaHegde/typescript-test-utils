@@ -1,14 +1,10 @@
-import {JestTestLibrary} from "./jest/JestTestLibrary";
-import {MochaTestLibrary} from "./mocha/MochaTestLibrary";
-import {PlaywrightTestLibrary} from "./playwright/PlaywrightTestLibrary";
-import {TestSuiteSetup} from "./TestSuiteSetup";
+import {TestSuiteSetupClassType} from "./TestSuiteSetup";
+import {TestLibraryClassType} from "./TestLibrary";
 
 export type TestParams = {
   propertyKey: string,
   dataProvider: string,
 };
-
-export type TestLibraryClassType = typeof JestTestLibrary | typeof MochaTestLibrary | typeof PlaywrightTestLibrary;
 
 export class TestHookData {
   public before = new Array<string>();
@@ -17,7 +13,7 @@ export class TestHookData {
   public after = new Array<string>();
   public afterEach = new Array<string>();
   public TestLibraryClass: TestLibraryClassType;
-  public TestSuiteSetupClasses = new Set<typeof TestSuiteSetup>();
+  public TestSuiteSetupClasses = new Set<TestSuiteSetupClassType>();
 
   constructor(copyFrom?: TestHookData) {
     if (copyFrom) {

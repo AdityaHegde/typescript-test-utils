@@ -1,15 +1,21 @@
 import should from "should";
-import {TestBase} from "../../src";
+import {TestBase, TestSuiteParameter} from "../../src";
 import {MochaTestLibrary} from "../../src/mocha/MochaTestLibrary";
 
-@TestBase.ParameterizedSuite([0, 1, 2].map(idx => {
+type ParameterizedTestParameter = TestSuiteParameter & {
+  expectedTitle: string;
+}
+
+const parameters: Array<ParameterizedTestParameter> = [0, 1, 2].map(idx => {
   return {
     suiteTitle: `ParameterizedTest${idx}`,
     expectedTitle: `ParameterizedTest${idx}`,
   }
-}))
+});
+
+@TestBase.ParameterizedSuite(parameters)
 @TestBase.TestLibrary(MochaTestLibrary)
-export class ParameterizedTest extends TestBase {
+export class ParameterizedTest extends TestBase<ParameterizedTestParameter> {
   private setupCalled = false;
   private setupTestCalled = false;
   private teardownTestCalled = false;

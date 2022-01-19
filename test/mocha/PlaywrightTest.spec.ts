@@ -22,6 +22,14 @@ class ServerSetup extends TestSuiteSetup {
       this.server.close(resolve);
     });
   }
+
+  public setupTest(testSuiteParameter: TestSuiteParameter, testContext: Record<any, any>): Promise<void> {
+    return Promise.resolve(undefined);
+  }
+
+  public teardownTest(testSuiteParameter: TestSuiteParameter, testContext: Record<any, any>): Promise<void> {
+    return Promise.resolve(undefined);
+  }
 }
 
 @TestBase.Suite

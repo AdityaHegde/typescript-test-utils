@@ -1,6 +1,12 @@
 [@adityahegde/typescript-test-utils](../README.md) / [Modules](../modules.md) / TestBase
 
-# Class: TestBase
+# Class: TestBase<Parameter\>
+
+## Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `Parameter` | extends [`TestSuiteParameter`](../modules.md#testsuiteparameter) = [`TestSuiteParameter`](../modules.md#testsuiteparameter) |
 
 ## Table of contents
 
@@ -45,27 +51,33 @@
 
 ### constructor
 
-• **new TestBase**(`testSuiteParameter`)
+• **new TestBase**<`Parameter`\>(`testSuiteParameter`)
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `Parameter` | extends [`TestSuiteParameter`](../modules.md#testsuiteparameter) = [`TestSuiteParameter`](../modules.md#testsuiteparameter) |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `testSuiteParameter` | [`TestSuiteParameter`](../modules.md#testsuiteparameter) |
+| `testSuiteParameter` | `Parameter` |
 
 #### Defined in
 
-[TestBase.ts:30](https://github.com/AdityaHegde/typescript-test-utils/blob/b5280ad/src/TestBase.ts#L30)
+[TestBase.ts:34](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/TestBase.ts#L34)
 
 ## Properties
 
 ### sandbox
 
-• `Protected` **sandbox**: `any`
+• `Protected` **sandbox**: `SinonSandbox`
 
 #### Defined in
 
-[TestBase.ts:22](https://github.com/AdityaHegde/typescript-test-utils/blob/b5280ad/src/TestBase.ts#L22)
+[TestBase.ts:26](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/TestBase.ts#L26)
 
 ___
 
@@ -75,7 +87,7 @@ ___
 
 #### Defined in
 
-[TestBase.ts:28](https://github.com/AdityaHegde/typescript-test-utils/blob/b5280ad/src/TestBase.ts#L28)
+[TestBase.ts:32](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/TestBase.ts#L32)
 
 ___
 
@@ -85,27 +97,27 @@ ___
 
 #### Defined in
 
-[TestBase.ts:23](https://github.com/AdityaHegde/typescript-test-utils/blob/b5280ad/src/TestBase.ts#L23)
+[TestBase.ts:27](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/TestBase.ts#L27)
 
 ___
 
 ### testSuiteParameter
 
-• `Protected` **testSuiteParameter**: [`TestSuiteParameter`](../modules.md#testsuiteparameter)
+• `Protected` **testSuiteParameter**: `Parameter`
 
 #### Defined in
 
-[TestBase.ts:25](https://github.com/AdityaHegde/typescript-test-utils/blob/b5280ad/src/TestBase.ts#L25)
+[TestBase.ts:29](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/TestBase.ts#L29)
 
 ___
 
 ### testSuiteSetups
 
-• `Protected` **testSuiteSetups**: [`TestSuiteSetup`](TestSuiteSetup.md)[]
+• `Protected` **testSuiteSetups**: [`TestSuiteSetup`](TestSuiteSetup.md)<[`TestSuiteParameter`](../modules.md#testsuiteparameter)\>[]
 
 #### Defined in
 
-[TestBase.ts:24](https://github.com/AdityaHegde/typescript-test-utils/blob/b5280ad/src/TestBase.ts#L24)
+[TestBase.ts:28](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/TestBase.ts#L28)
 
 ___
 
@@ -115,17 +127,17 @@ ___
 
 #### Defined in
 
-[TestBase.ts:27](https://github.com/AdityaHegde/typescript-test-utils/blob/b5280ad/src/TestBase.ts#L27)
+[TestBase.ts:31](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/TestBase.ts#L31)
 
 ___
 
 ### \_testHookData
 
-▪ `Static` `Protected` **\_testHookData**: `TestHookData`
+▪ `Static` **\_testHookData**: `TestHookData`
 
 #### Defined in
 
-[TestBase.ts:20](https://github.com/AdityaHegde/typescript-test-utils/blob/b5280ad/src/TestBase.ts#L20)
+[TestBase.ts:24](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/TestBase.ts#L24)
 
 ## Methods
 
@@ -147,7 +159,7 @@ ___
 
 #### Defined in
 
-[TestBase.ts:244](https://github.com/AdityaHegde/typescript-test-utils/blob/b5280ad/src/TestBase.ts#L244)
+[TestBase.ts:256](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/TestBase.ts#L256)
 
 ___
 
@@ -169,7 +181,7 @@ ___
 
 #### Defined in
 
-[TestBase.ts:254](https://github.com/AdityaHegde/typescript-test-utils/blob/b5280ad/src/TestBase.ts#L254)
+[TestBase.ts:266](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/TestBase.ts#L266)
 
 ___
 
@@ -191,7 +203,7 @@ ___
 
 #### Defined in
 
-[TestBase.ts:205](https://github.com/AdityaHegde/typescript-test-utils/blob/b5280ad/src/TestBase.ts#L205)
+[TestBase.ts:217](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/TestBase.ts#L217)
 
 ___
 
@@ -213,7 +225,7 @@ ___
 
 #### Defined in
 
-[TestBase.ts:192](https://github.com/AdityaHegde/typescript-test-utils/blob/b5280ad/src/TestBase.ts#L192)
+[TestBase.ts:204](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/TestBase.ts#L204)
 
 ___
 
@@ -229,7 +241,7 @@ ___
 
 #### Defined in
 
-[TestBase.ts:164](https://github.com/AdityaHegde/typescript-test-utils/blob/b5280ad/src/TestBase.ts#L164)
+[TestBase.ts:176](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/TestBase.ts#L176)
 
 ___
 
@@ -250,7 +262,7 @@ ___
 
 #### Defined in
 
-[TestBase.ts:142](https://github.com/AdityaHegde/typescript-test-utils/blob/b5280ad/src/TestBase.ts#L142)
+[TestBase.ts:154](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/TestBase.ts#L154)
 
 ___
 
@@ -272,7 +284,7 @@ ___
 
 #### Defined in
 
-[TestBase.ts:148](https://github.com/AdityaHegde/typescript-test-utils/blob/b5280ad/src/TestBase.ts#L148)
+[TestBase.ts:160](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/TestBase.ts#L160)
 
 ___
 
@@ -295,7 +307,7 @@ ___
 
 #### Defined in
 
-[TestBase.ts:228](https://github.com/AdityaHegde/typescript-test-utils/blob/b5280ad/src/TestBase.ts#L228)
+[TestBase.ts:240](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/TestBase.ts#L240)
 
 ___
 
@@ -317,7 +329,7 @@ ___
 
 #### Defined in
 
-[TestBase.ts:217](https://github.com/AdityaHegde/typescript-test-utils/blob/b5280ad/src/TestBase.ts#L217)
+[TestBase.ts:229](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/TestBase.ts#L229)
 
 ___
 
@@ -331,13 +343,13 @@ ___
 
 #### Defined in
 
-[TestBase.ts:132](https://github.com/AdityaHegde/typescript-test-utils/blob/b5280ad/src/TestBase.ts#L132)
+[TestBase.ts:144](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/TestBase.ts#L144)
 
 ___
 
 ### AfterEachTest
 
-▸ `Static` **AfterEachTest**(): (`target`: [`TestBase`](TestBase.md), `propertyKey`: `string`) => `void`
+▸ `Static` **AfterEachTest**(): (`target`: [`TestBase`](TestBase.md)<[`TestSuiteParameter`](../modules.md#testsuiteparameter)\>, `propertyKey`: `string`) => `void`
 
 #### Returns
 
@@ -349,7 +361,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `target` | [`TestBase`](TestBase.md) |
+| `target` | [`TestBase`](TestBase.md)<[`TestSuiteParameter`](../modules.md#testsuiteparameter)\> |
 | `propertyKey` | `string` |
 
 ##### Returns
@@ -358,13 +370,13 @@ ___
 
 #### Defined in
 
-[TestBase.ts:93](https://github.com/AdityaHegde/typescript-test-utils/blob/b5280ad/src/TestBase.ts#L93)
+[TestBase.ts:102](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/TestBase.ts#L102)
 
 ___
 
 ### AfterSuite
 
-▸ `Static` **AfterSuite**(): (`target`: [`TestBase`](TestBase.md), `propertyKey`: `string`) => `void`
+▸ `Static` **AfterSuite**(): (`target`: [`TestBase`](TestBase.md)<[`TestSuiteParameter`](../modules.md#testsuiteparameter)\>, `propertyKey`: `string`) => `void`
 
 #### Returns
 
@@ -376,7 +388,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `target` | [`TestBase`](TestBase.md) |
+| `target` | [`TestBase`](TestBase.md)<[`TestSuiteParameter`](../modules.md#testsuiteparameter)\> |
 | `propertyKey` | `string` |
 
 ##### Returns
@@ -385,13 +397,13 @@ ___
 
 #### Defined in
 
-[TestBase.ts:84](https://github.com/AdityaHegde/typescript-test-utils/blob/b5280ad/src/TestBase.ts#L84)
+[TestBase.ts:93](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/TestBase.ts#L93)
 
 ___
 
 ### BeforeEachTest
 
-▸ `Static` **BeforeEachTest**(): (`target`: [`TestBase`](TestBase.md), `propertyKey`: `string`) => `void`
+▸ `Static` **BeforeEachTest**(): (`target`: [`TestBase`](TestBase.md)<[`TestSuiteParameter`](../modules.md#testsuiteparameter)\>, `propertyKey`: `string`) => `void`
 
 #### Returns
 
@@ -403,7 +415,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `target` | [`TestBase`](TestBase.md) |
+| `target` | [`TestBase`](TestBase.md)<[`TestSuiteParameter`](../modules.md#testsuiteparameter)\> |
 | `propertyKey` | `string` |
 
 ##### Returns
@@ -412,13 +424,13 @@ ___
 
 #### Defined in
 
-[TestBase.ts:75](https://github.com/AdityaHegde/typescript-test-utils/blob/b5280ad/src/TestBase.ts#L75)
+[TestBase.ts:84](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/TestBase.ts#L84)
 
 ___
 
 ### BeforeSuite
 
-▸ `Static` **BeforeSuite**(): (`target`: [`TestBase`](TestBase.md), `propertyKey`: `string`) => `void`
+▸ `Static` **BeforeSuite**(): (`target`: [`TestBase`](TestBase.md)<[`TestSuiteParameter`](../modules.md#testsuiteparameter)\>, `propertyKey`: `string`) => `void`
 
 #### Returns
 
@@ -430,7 +442,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `target` | [`TestBase`](TestBase.md) |
+| `target` | [`TestBase`](TestBase.md)<[`TestSuiteParameter`](../modules.md#testsuiteparameter)\> |
 | `propertyKey` | `string` |
 
 ##### Returns
@@ -439,31 +451,38 @@ ___
 
 #### Defined in
 
-[TestBase.ts:66](https://github.com/AdityaHegde/typescript-test-utils/blob/b5280ad/src/TestBase.ts#L66)
+[TestBase.ts:75](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/TestBase.ts#L75)
 
 ___
 
 ### ParameterizedSuite
 
-▸ `Static` **ParameterizedSuite**(`params`): (`constructor`: typeof [`TestBase`](TestBase.md)) => `void`
+▸ `Static` **ParameterizedSuite**<`P`, `C`\>(`params`): (`c`: `C`) => `void`
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `P` | extends [`TestSuiteParameter`](../modules.md#testsuiteparameter) |
+| `C` | extends `TestBaseClass`<`P`\> |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `params` | [`TestSuiteParameter`](../modules.md#testsuiteparameter)[] |
+| `params` | `P`[] |
 
 #### Returns
 
 `fn`
 
-▸ (`constructor`): `void`
+▸ (`c`): `void`
 
 ##### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `constructor` | typeof [`TestBase`](TestBase.md) |
+| `c` | `C` |
 
 ##### Returns
 
@@ -471,7 +490,7 @@ ___
 
 #### Defined in
 
-[TestBase.ts:53](https://github.com/AdityaHegde/typescript-test-utils/blob/b5280ad/src/TestBase.ts#L53)
+[TestBase.ts:56](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/TestBase.ts#L56)
 
 ___
 
@@ -485,7 +504,7 @@ Automatically adds the tests for the class. Useful when the test class is standa
 
 | Name | Type |
 | :------ | :------ |
-| `constructor` | typeof [`TestBase`](TestBase.md) |
+| `constructor` | `TestBaseClass`<`any`\> |
 
 #### Returns
 
@@ -493,13 +512,13 @@ Automatically adds the tests for the class. Useful when the test class is standa
 
 #### Defined in
 
-[TestBase.ts:43](https://github.com/AdityaHegde/typescript-test-utils/blob/b5280ad/src/TestBase.ts#L43)
+[TestBase.ts:47](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/TestBase.ts#L47)
 
 ___
 
 ### Test
 
-▸ `Static` **Test**(`dataProvider?`): (`target`: [`TestBase`](TestBase.md), `propertyKey`: `string`) => `void`
+▸ `Static` **Test**(`dataProvider?`): (`target`: [`TestBase`](TestBase.md)<[`TestSuiteParameter`](../modules.md#testsuiteparameter)\>, `propertyKey`: `string`) => `void`
 
 #### Parameters
 
@@ -517,7 +536,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `target` | [`TestBase`](TestBase.md) |
+| `target` | [`TestBase`](TestBase.md)<[`TestSuiteParameter`](../modules.md#testsuiteparameter)\> |
 | `propertyKey` | `string` |
 
 ##### Returns
@@ -526,13 +545,20 @@ ___
 
 #### Defined in
 
-[TestBase.ts:102](https://github.com/AdityaHegde/typescript-test-utils/blob/b5280ad/src/TestBase.ts#L102)
+[TestBase.ts:111](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/TestBase.ts#L111)
 
 ___
 
 ### TestLibrary
 
-▸ `Static` **TestLibrary**(`TestLibraryClass`): (`constructor`: typeof [`TestBase`](TestBase.md)) => `void`
+▸ `Static` **TestLibrary**<`P`, `C`\>(`TestLibraryClass`): (`c`: `C`) => `void`
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `P` | extends [`TestSuiteParameter`](../modules.md#testsuiteparameter) |
+| `C` | extends `TestBaseClass`<`P`\> |
 
 #### Parameters
 
@@ -544,13 +570,13 @@ ___
 
 `fn`
 
-▸ (`constructor`): `void`
+▸ (`c`): `void`
 
 ##### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `constructor` | typeof [`TestBase`](TestBase.md) |
+| `c` | `C` |
 
 ##### Returns
 
@@ -558,19 +584,19 @@ ___
 
 #### Defined in
 
-[TestBase.ts:115](https://github.com/AdityaHegde/typescript-test-utils/blob/b5280ad/src/TestBase.ts#L115)
+[TestBase.ts:124](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/TestBase.ts#L124)
 
 ___
 
 ### TestSuiteSetup
 
-▸ `Static` **TestSuiteSetup**(`TestSuiteSetupClass`): (`constructor`: typeof [`TestBase`](TestBase.md)) => `void`
+▸ `Static` **TestSuiteSetup**(`TestSuiteSetupClass`): (`constructor`: `TestBaseClass`<`any`\>) => `void`
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `TestSuiteSetupClass` | typeof [`TestSuiteSetup`](TestSuiteSetup.md) |
+| `TestSuiteSetupClass` | `TestSuiteSetupClassType` |
 
 #### Returns
 
@@ -582,7 +608,7 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `constructor` | typeof [`TestBase`](TestBase.md) |
+| `constructor` | `TestBaseClass`<`any`\> |
 
 ##### Returns
 
@@ -590,13 +616,13 @@ ___
 
 #### Defined in
 
-[TestBase.ts:125](https://github.com/AdityaHegde/typescript-test-utils/blob/b5280ad/src/TestBase.ts#L125)
+[TestBase.ts:137](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/TestBase.ts#L137)
 
 ___
 
 ### createTestHookData
 
-▸ `Static` `Private` **createTestHookData**(`constructor`): typeof [`TestBase`](TestBase.md)
+▸ `Static` `Private` **createTestHookData**(`constructor`): `TestBaseClass`<`any`\>
 
 **`internal`**
 
@@ -604,12 +630,12 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `constructor` | typeof [`TestBase`](TestBase.md) |
+| `constructor` | `TestBaseClass`<`any`\> |
 
 #### Returns
 
-typeof [`TestBase`](TestBase.md)
+`TestBaseClass`<`any`\>
 
 #### Defined in
 
-[TestBase.ts:267](https://github.com/AdityaHegde/typescript-test-utils/blob/b5280ad/src/TestBase.ts#L267)
+[TestBase.ts:279](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/TestBase.ts#L279)

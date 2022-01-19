@@ -1,27 +1,21 @@
 import {TestSuiteParameter} from "./TestBase";
 
-export class TestSuiteSetup {
+export type TestSuiteSetupClassType = (new (...args: Array<any>) => TestSuiteSetup);
+
+export abstract class TestSuiteSetup<Parameter extends TestSuiteParameter = TestSuiteParameter> {
   /**
    */
-  public setupSuite(testSuiteParameter: TestSuiteParameter): Promise<void> {
-    return Promise.resolve();
-  }
+  public abstract setupSuite(testSuiteParameter: Parameter): Promise<void>;
 
   /**
    */
-  public setupTest(testSuiteParameter: TestSuiteParameter, testContext: Record<any, any>): Promise<void> {
-    return Promise.resolve();
-  }
+  public abstract setupTest(testSuiteParameter: Parameter, testContext: Record<any, any>): Promise<void>;
 
   /**
    */
-  public teardownTest(testSuiteParameter: TestSuiteParameter, testContext: Record<any, any>): Promise<void> {
-    return Promise.resolve();
-  }
+  public abstract teardownTest(testSuiteParameter: Parameter, testContext: Record<any, any>): Promise<void>;
 
   /**
    */
-  public teardownSuite(testSuiteParameter: TestSuiteParameter): Promise<void> {
-    return Promise.resolve();
-  }
+  public abstract teardownSuite(testSuiteParameter: Parameter): Promise<void>;
 }

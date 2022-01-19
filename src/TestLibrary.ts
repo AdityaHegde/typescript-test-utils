@@ -1,3 +1,5 @@
+export type TestLibraryClassType = (new (...args: Array<any>) => TestLibrary);
+
 /**
  *
  */

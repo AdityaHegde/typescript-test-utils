@@ -40,17 +40,24 @@
 
 #### Defined in
 
-[TestBase.ts:7](https://github.com/AdityaHegde/typescript-test-utils/blob/b5280ad/src/TestBase.ts#L7)
+[TestBase.ts:7](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/TestBase.ts#L7)
 
 ___
 
 ### TestSuiteParameter
 
-Ƭ **TestSuiteParameter**: { `TestSuiteSetupClasses?`: typeof [`TestSuiteSetup`](classes/TestSuiteSetup.md)[] ; `suiteTitle`: `string`  } & `Record`<`any`, `any`\>
+Ƭ **TestSuiteParameter**: `Object`
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `TestSuiteSetupClasses?` | `TestSuiteSetupClassType`[] |
+| `suiteTitle?` | `string` |
 
 #### Defined in
 
-[TestBase.ts:12](https://github.com/AdityaHegde/typescript-test-utils/blob/b5280ad/src/TestBase.ts#L12)
+[TestBase.ts:12](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/TestBase.ts#L12)
 
 ## Functions
 
@@ -70,4 +77,4 @@ ___
 
 #### Defined in
 
-[getClassName.ts:4](https://github.com/AdityaHegde/typescript-test-utils/blob/b5280ad/src/getClassName.ts#L4)
+[getClassName.ts:4](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/getClassName.ts#L4)

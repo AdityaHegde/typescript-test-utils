@@ -1,6 +1,12 @@
 [@adityahegde/typescript-test-utils](../README.md) / [Modules](../modules.md) / TestSuiteSetup
 
-# Class: TestSuiteSetup
+# Class: TestSuiteSetup<Parameter\>
+
+## Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `Parameter` | extends [`TestSuiteParameter`](../modules.md#testsuiteparameter) = [`TestSuiteParameter`](../modules.md#testsuiteparameter) |
 
 ## Table of contents
 
@@ -19,19 +25,25 @@
 
 ### constructor
 
-• **new TestSuiteSetup**()
+• **new TestSuiteSetup**<`Parameter`\>()
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `Parameter` | extends [`TestSuiteParameter`](../modules.md#testsuiteparameter) = [`TestSuiteParameter`](../modules.md#testsuiteparameter) |
 
 ## Methods
 
 ### setupSuite
 
-▸ **setupSuite**(`testSuiteParameter`): `Promise`<`void`\>
+▸ `Abstract` **setupSuite**(`testSuiteParameter`): `Promise`<`void`\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `testSuiteParameter` | [`TestSuiteParameter`](../modules.md#testsuiteparameter) |
+| `testSuiteParameter` | `Parameter` |
 
 #### Returns
 
@@ -39,19 +51,19 @@
 
 #### Defined in
 
-[TestSuiteSetup.ts:6](https://github.com/AdityaHegde/typescript-test-utils/blob/b5280ad/src/TestSuiteSetup.ts#L6)
+[TestSuiteSetup.ts:8](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/TestSuiteSetup.ts#L8)
 
 ___
 
 ### setupTest
 
-▸ **setupTest**(`testSuiteParameter`, `testContext`): `Promise`<`void`\>
+▸ `Abstract` **setupTest**(`testSuiteParameter`, `testContext`): `Promise`<`void`\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `testSuiteParameter` | [`TestSuiteParameter`](../modules.md#testsuiteparameter) |
+| `testSuiteParameter` | `Parameter` |
 | `testContext` | `Record`<`any`, `any`\> |
 
 #### Returns
@@ -60,19 +72,19 @@ ___
 
 #### Defined in
 
-[TestSuiteSetup.ts:12](https://github.com/AdityaHegde/typescript-test-utils/blob/b5280ad/src/TestSuiteSetup.ts#L12)
+[TestSuiteSetup.ts:12](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/TestSuiteSetup.ts#L12)
 
 ___
 
 ### teardownSuite
 
-▸ **teardownSuite**(`testSuiteParameter`): `Promise`<`void`\>
+▸ `Abstract` **teardownSuite**(`testSuiteParameter`): `Promise`<`void`\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `testSuiteParameter` | [`TestSuiteParameter`](../modules.md#testsuiteparameter) |
+| `testSuiteParameter` | `Parameter` |
 
 #### Returns
 
@@ -80,19 +92,19 @@ ___
 
 #### Defined in
 
-[TestSuiteSetup.ts:24](https://github.com/AdityaHegde/typescript-test-utils/blob/b5280ad/src/TestSuiteSetup.ts#L24)
+[TestSuiteSetup.ts:20](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/TestSuiteSetup.ts#L20)
 
 ___
 
 ### teardownTest
 
-▸ **teardownTest**(`testSuiteParameter`, `testContext`): `Promise`<`void`\>
+▸ `Abstract` **teardownTest**(`testSuiteParameter`, `testContext`): `Promise`<`void`\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `testSuiteParameter` | [`TestSuiteParameter`](../modules.md#testsuiteparameter) |
+| `testSuiteParameter` | `Parameter` |
 | `testContext` | `Record`<`any`, `any`\> |
 
 #### Returns
@@ -101,4 +113,4 @@ ___
 
 #### Defined in
 
-[TestSuiteSetup.ts:18](https://github.com/AdityaHegde/typescript-test-utils/blob/b5280ad/src/TestSuiteSetup.ts#L18)
+[TestSuiteSetup.ts:16](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/TestSuiteSetup.ts#L16)
