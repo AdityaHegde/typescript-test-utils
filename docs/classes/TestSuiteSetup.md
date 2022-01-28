@@ -51,7 +51,7 @@
 
 #### Defined in
 
-[TestSuiteSetup.ts:8](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/TestSuiteSetup.ts#L8)
+[TestSuiteSetup.ts:8](https://github.com/AdityaHegde/typescript-test-utils/blob/637aef5/src/TestSuiteSetup.ts#L8)
 
 ___
 
@@ -72,7 +72,7 @@ ___
 
 #### Defined in
 
-[TestSuiteSetup.ts:12](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/TestSuiteSetup.ts#L12)
+[TestSuiteSetup.ts:12](https://github.com/AdityaHegde/typescript-test-utils/blob/637aef5/src/TestSuiteSetup.ts#L12)
 
 ___
 
@@ -92,7 +92,7 @@ ___
 
 #### Defined in
 
-[TestSuiteSetup.ts:20](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/TestSuiteSetup.ts#L20)
+[TestSuiteSetup.ts:20](https://github.com/AdityaHegde/typescript-test-utils/blob/637aef5/src/TestSuiteSetup.ts#L20)
 
 ___
 
@@ -113,4 +113,4 @@ ___
 
 #### Defined in
 
-[TestSuiteSetup.ts:16](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/TestSuiteSetup.ts#L16)
+[TestSuiteSetup.ts:16](https://github.com/AdityaHegde/typescript-test-utils/blob/637aef5/src/TestSuiteSetup.ts#L16)

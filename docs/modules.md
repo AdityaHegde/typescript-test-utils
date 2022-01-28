@@ -40,7 +40,7 @@
 
 #### Defined in
 
-[TestBase.ts:7](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/TestBase.ts#L7)
+[TestBase.ts:7](https://github.com/AdityaHegde/typescript-test-utils/blob/637aef5/src/TestBase.ts#L7)
 
 ___
 
@@ -57,7 +57,7 @@ ___
 
 #### Defined in
 
-[TestBase.ts:12](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/TestBase.ts#L12)
+[TestBase.ts:12](https://github.com/AdityaHegde/typescript-test-utils/blob/637aef5/src/TestBase.ts#L12)
 
 ## Functions
 
@@ -77,4 +77,4 @@ ___
 
 #### Defined in
 
-[getClassName.ts:4](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/getClassName.ts#L4)
+[getClassName.ts:4](https://github.com/AdityaHegde/typescript-test-utils/blob/637aef5/src/getClassName.ts#L4)

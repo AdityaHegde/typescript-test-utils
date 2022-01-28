@@ -67,7 +67,7 @@
 
 #### Defined in
 
-[TestBase.ts:34](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/TestBase.ts#L34)
+[TestBase.ts:34](https://github.com/AdityaHegde/typescript-test-utils/blob/637aef5/src/TestBase.ts#L34)
 
 ## Properties
 
@@ -77,7 +77,7 @@
 
 #### Defined in
 
-[TestBase.ts:26](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/TestBase.ts#L26)
+[TestBase.ts:26](https://github.com/AdityaHegde/typescript-test-utils/blob/637aef5/src/TestBase.ts#L26)
 
 ___
 
@@ -87,7 +87,7 @@ ___
 
 #### Defined in
 
-[TestBase.ts:32](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/TestBase.ts#L32)
+[TestBase.ts:32](https://github.com/AdityaHegde/typescript-test-utils/blob/637aef5/src/TestBase.ts#L32)
 
 ___
 
@@ -97,7 +97,7 @@ ___
 
 #### Defined in
 
-[TestBase.ts:27](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/TestBase.ts#L27)
+[TestBase.ts:27](https://github.com/AdityaHegde/typescript-test-utils/blob/637aef5/src/TestBase.ts#L27)
 
 ___
 
@@ -107,7 +107,7 @@ ___
 
 #### Defined in
 
-[TestBase.ts:29](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/TestBase.ts#L29)
+[TestBase.ts:29](https://github.com/AdityaHegde/typescript-test-utils/blob/637aef5/src/TestBase.ts#L29)
 
 ___
 
@@ -117,7 +117,7 @@ ___
 
 #### Defined in
 
-[TestBase.ts:28](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/TestBase.ts#L28)
+[TestBase.ts:28](https://github.com/AdityaHegde/typescript-test-utils/blob/637aef5/src/TestBase.ts#L28)
 
 ___
 
@@ -127,7 +127,7 @@ ___
 
 #### Defined in
 
-[TestBase.ts:31](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/TestBase.ts#L31)
+[TestBase.ts:31](https://github.com/AdityaHegde/typescript-test-utils/blob/637aef5/src/TestBase.ts#L31)
 
 ___
 
@@ -137,7 +137,7 @@ ___
 
 #### Defined in
 
-[TestBase.ts:24](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/TestBase.ts#L24)
+[TestBase.ts:24](https://github.com/AdityaHegde/typescript-test-utils/blob/637aef5/src/TestBase.ts#L24)
 
 ## Methods
 
@@ -159,7 +159,7 @@ ___
 
 #### Defined in
 
-[TestBase.ts:256](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/TestBase.ts#L256)
+[TestBase.ts:256](https://github.com/AdityaHegde/typescript-test-utils/blob/637aef5/src/TestBase.ts#L256)
 
 ___
 
@@ -181,7 +181,7 @@ ___
 
 #### Defined in
 
-[TestBase.ts:266](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/TestBase.ts#L266)
+[TestBase.ts:266](https://github.com/AdityaHegde/typescript-test-utils/blob/637aef5/src/TestBase.ts#L266)
 
 ___
 
@@ -203,7 +203,7 @@ ___
 
 #### Defined in
 
-[TestBase.ts:217](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/TestBase.ts#L217)
+[TestBase.ts:217](https://github.com/AdityaHegde/typescript-test-utils/blob/637aef5/src/TestBase.ts#L217)
 
 ___
 
@@ -225,7 +225,7 @@ ___
 
 #### Defined in
 
-[TestBase.ts:204](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/TestBase.ts#L204)
+[TestBase.ts:204](https://github.com/AdityaHegde/typescript-test-utils/blob/637aef5/src/TestBase.ts#L204)
 
 ___
 
@@ -241,7 +241,7 @@ ___
 
 #### Defined in
 
-[TestBase.ts:176](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/TestBase.ts#L176)
+[TestBase.ts:176](https://github.com/AdityaHegde/typescript-test-utils/blob/637aef5/src/TestBase.ts#L176)
 
 ___
 
@@ -262,7 +262,7 @@ ___
 
 #### Defined in
 
-[TestBase.ts:154](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/TestBase.ts#L154)
+[TestBase.ts:154](https://github.com/AdityaHegde/typescript-test-utils/blob/637aef5/src/TestBase.ts#L154)
 
 ___
 
@@ -284,7 +284,7 @@ ___
 
 #### Defined in
 
-[TestBase.ts:160](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/TestBase.ts#L160)
+[TestBase.ts:160](https://github.com/AdityaHegde/typescript-test-utils/blob/637aef5/src/TestBase.ts#L160)
 
 ___
 
@@ -307,7 +307,7 @@ ___
 
 #### Defined in
 
-[TestBase.ts:240](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/TestBase.ts#L240)
+[TestBase.ts:240](https://github.com/AdityaHegde/typescript-test-utils/blob/637aef5/src/TestBase.ts#L240)
 
 ___
 
@@ -329,7 +329,7 @@ ___
 
 #### Defined in
 
-[TestBase.ts:229](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/TestBase.ts#L229)
+[TestBase.ts:229](https://github.com/AdityaHegde/typescript-test-utils/blob/637aef5/src/TestBase.ts#L229)
 
 ___
 
@@ -343,7 +343,7 @@ ___
 
 #### Defined in
 
-[TestBase.ts:144](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/TestBase.ts#L144)
+[TestBase.ts:144](https://github.com/AdityaHegde/typescript-test-utils/blob/637aef5/src/TestBase.ts#L144)
 
 ___
 
@@ -370,7 +370,7 @@ ___
 
 #### Defined in
 
-[TestBase.ts:102](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/TestBase.ts#L102)
+[TestBase.ts:102](https://github.com/AdityaHegde/typescript-test-utils/blob/637aef5/src/TestBase.ts#L102)
 
 ___
 
@@ -397,7 +397,7 @@ ___
 
 #### Defined in
 
-[TestBase.ts:93](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/TestBase.ts#L93)
+[TestBase.ts:93](https://github.com/AdityaHegde/typescript-test-utils/blob/637aef5/src/TestBase.ts#L93)
 
 ___
 
@@ -424,7 +424,7 @@ ___
 
 #### Defined in
 
-[TestBase.ts:84](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/TestBase.ts#L84)
+[TestBase.ts:84](https://github.com/AdityaHegde/typescript-test-utils/blob/637aef5/src/TestBase.ts#L84)
 
 ___
 
@@ -451,7 +451,7 @@ ___
 
 #### Defined in
 
-[TestBase.ts:75](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/TestBase.ts#L75)
+[TestBase.ts:75](https://github.com/AdityaHegde/typescript-test-utils/blob/637aef5/src/TestBase.ts#L75)
 
 ___
 
@@ -490,7 +490,7 @@ ___
 
 #### Defined in
 
-[TestBase.ts:56](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/TestBase.ts#L56)
+[TestBase.ts:56](https://github.com/AdityaHegde/typescript-test-utils/blob/637aef5/src/TestBase.ts#L56)
 
 ___
 
@@ -512,7 +512,7 @@ Automatically adds the tests for the class. Useful when the test class is standa
 
 #### Defined in
 
-[TestBase.ts:47](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/TestBase.ts#L47)
+[TestBase.ts:47](https://github.com/AdityaHegde/typescript-test-utils/blob/637aef5/src/TestBase.ts#L47)
 
 ___
 
@@ -545,7 +545,7 @@ ___
 
 #### Defined in
 
-[TestBase.ts:111](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/TestBase.ts#L111)
+[TestBase.ts:111](https://github.com/AdityaHegde/typescript-test-utils/blob/637aef5/src/TestBase.ts#L111)
 
 ___
 
@@ -584,7 +584,7 @@ ___
 
 #### Defined in
 
-[TestBase.ts:124](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/TestBase.ts#L124)
+[TestBase.ts:124](https://github.com/AdityaHegde/typescript-test-utils/blob/637aef5/src/TestBase.ts#L124)
 
 ___
 
@@ -616,7 +616,7 @@ ___
 
 #### Defined in
 
-[TestBase.ts:137](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/TestBase.ts#L137)
+[TestBase.ts:137](https://github.com/AdityaHegde/typescript-test-utils/blob/637aef5/src/TestBase.ts#L137)
 
 ___
 
@@ -638,4 +638,4 @@ ___
 
 #### Defined in
 
-[TestBase.ts:279](https://github.com/AdityaHegde/typescript-test-utils/blob/eefd4f7/src/TestBase.ts#L279)
+[TestBase.ts:279](https://github.com/AdityaHegde/typescript-test-utils/blob/637aef5/src/TestBase.ts#L279)
